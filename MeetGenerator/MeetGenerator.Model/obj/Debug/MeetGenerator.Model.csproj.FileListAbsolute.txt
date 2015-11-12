@@ -1,0 +1,5 @@
+D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Model\bin\Debug\MeetGenerator.Model.dll
+D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Model\bin\Debug\MeetGenerator.Model.pdb
+D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Model\obj\Debug\MeetGenerator.Model.csprojResolveAssemblyReference.cache
+D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Model\obj\Debug\MeetGenerator.Model.dll
+D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Model\obj\Debug\MeetGenerator.Model.pdb
