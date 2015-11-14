@@ -11,5 +11,10 @@ namespace MeetGenerator.Model.Repositories
     {
         void Create(User user);
         User Get(Guid UserID);
+        void Update(User user);
+        void Delete(Guid id);
+
+        bool IsUserExist(Guid id);
+        bool IsEmailBusy(String email);
     }
 }
