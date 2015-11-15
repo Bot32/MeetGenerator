@@ -50,11 +50,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MeetingRepositoryTest.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestDataHelper.cs" />
     <Compile Include="UserDataValidatorTest.cs" />
     <Compile Include="UserRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

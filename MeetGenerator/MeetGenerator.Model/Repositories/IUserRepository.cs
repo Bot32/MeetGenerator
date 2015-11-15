@@ -1,4 +1,4 @@
-﻿using MeetGenerator.Models;
+﻿using MeetGenerator.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,10 @@ namespace MeetGenerator.Model.Repositories
 {
     public interface IUserRepository
     {
-        void Create(User user);
-        User Get(Guid UserID);
-        void Update(User user);
-        void Delete(Guid id);
-
-        bool IsUserExist(Guid id);
-        bool IsEmailBusy(String email);
+        void CreateUser(User user);
+        User GetUser(Guid user);
+        User GetUser(String email);
+        void UpdateUserInfo(User user);
+        void DeleteUser(Guid userId);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MeetGenerator.Repository.SQL;
-using MeetGenerator.Models;
+using MeetGenerator.Model.Models;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using MeetGenerator.Repository.SQL.DataValidators;
@@ -22,11 +22,56 @@ namespace MeetGenerator.Tests
             user.FirstName = "TestUser";
 
             //act
-            userRepository.Create(user);
+            userRepository.CreateUser(user);
 
             //asserts
-            var resultUser = userRepository.Get(user.Id);
-            Assert.IsTrue(CompareUsers(user, resultUser));
+            var resultUser = userRepository.GetUser(user.Id);
+            TestDataHelper.PrintUserInfo(resultUser);
+            Assert.IsTrue(TestDataHelper.CompareUsers(user, resultUser));
+        }
+
+        [TestMethod]
+        public void GetUserByEmailTest()
+        {
+            //arrange
+            var userRepository = new UserRepository(Properties.Resources.ConnectionString);
+            User user = GenerateUser();
+
+            //act
+            userRepository.CreateUser(user);
+
+            //asserts
+            var resultUser = userRepository.GetUser(user.Email);
+            TestDataHelper.PrintUserInfo(resultUser);
+            Assert.IsTrue(TestDataHelper.CompareUsers(user, resultUser));
+        }
+
+        [TestMethod]
+        public void GetNonExistUserByEmailTest()
+        {
+            //arrange
+            var userRepository = new UserRepository(Properties.Resources.ConnectionString);
+            User user = GenerateUser();
+
+            //act
+
+            //asserts
+            var resultUser = userRepository.GetUser(user.Email);
+            Assert.IsNull(resultUser);
+        }
+
+        [TestMethod]
+        public void GetNotExistUserByIdTest()
+        {
+            //arrange
+            var userRepository = new UserRepository(Properties.Resources.ConnectionString);
+            User user = GenerateUser();
+
+            //act
+
+            //asserts
+            var resultUser = userRepository.GetUser(user.Id);
+            Assert.IsNull(resultUser);
         }
 
         [TestMethod]
@@ -37,11 +82,11 @@ namespace MeetGenerator.Tests
             User user = GenerateUser();
 
             //act  
-            userRepository.Create(user);
-            bool result = userRepository.IsEmailBusy(user.Email);
+            userRepository.CreateUser(user);
+            User resultUser = userRepository.GetUser(user.Email);
 
             //assert
-            Assert.IsTrue(result);
+            Assert.IsNotNull(resultUser);
         }
 
         [TestMethod]
@@ -49,12 +94,13 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
+            User user = GenerateUser();
 
-            //act
-            bool result = userRepository.IsEmailBusy(DateTime.Now.Millisecond + "@test.com");
+            //act  
+            User resultUser = userRepository.GetUser(user.Email);
 
             //assert
-            Assert.IsFalse(result);
+            Assert.IsNull(resultUser);
         }
 
         [TestMethod]
@@ -65,11 +111,11 @@ namespace MeetGenerator.Tests
             User user = GenerateUser();
 
             //act
-            userRepository.Create(user);
+            userRepository.CreateUser(user);
 
             //asserts
-            bool result = userRepository.IsUserExist(user.Id);
-            Assert.IsTrue(result);
+            User result = userRepository.GetUser(user.Id);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
@@ -80,33 +126,31 @@ namespace MeetGenerator.Tests
             User user = GenerateUser();
 
             //act
-            userRepository.Create(user);
-
-            //asserts
-            bool userExist = userRepository.IsUserExist(user.Id);
-            if (userExist)
-            {
-                Console.WriteLine("User exist.");
-            }
-            else
+            userRepository.CreateUser(user);
+            User userBeforeDelete = userRepository.GetUser(user.Id);
+            if (userBeforeDelete == null)
             {
                 Console.WriteLine("User not exist!");
             }
-            userRepository.Delete(user.Id);
+            else
+            {
+                Console.WriteLine("User exist.");
+            }
+            userRepository.DeleteUser(user.Id);
 
             //assert
-            bool userDeleted = userRepository.IsUserExist(user.Id);
+            User userAfterDelete = userRepository.GetUser(user.Id);
 
-            if (userDeleted)
-            {
-                Console.WriteLine("User not deleted!");
-            }
-            else
+            if (userAfterDelete == null)
             {
                 Console.WriteLine("User deleted.");
             }
+            else
+            {
+                Console.WriteLine("User not deleted!");
+            }
 
-            Assert.IsTrue(userExist & !userDeleted);
+            Assert.IsTrue(!(userBeforeDelete == null) & (userAfterDelete == null));
         }
 
         [TestMethod]
@@ -119,40 +163,31 @@ namespace MeetGenerator.Tests
             var secondUser = new User
             {
                 Id = firstUser.Id,
-                Email = "secondUser" + DateTime.Now.Millisecond + "@test.com",
+                Email = "second" + (DateTime.Now.Millisecond * new Random().Next(10000)) + "@test.com",
                 FirstName = "secondUserFirstName",
                 LastName = "secondUserLastName"
             };
 
             //act
-            userRepository.Create(firstUser);
-            userRepository.Update(secondUser);
+            userRepository.CreateUser(firstUser);
+            userRepository.UpdateUserInfo(secondUser);
 
             //asserts
-            var resultUser = userRepository.Get(firstUser.Id);
-            Assert.IsTrue(CompareUsers(resultUser, secondUser));
+            var resultUser = userRepository.GetUser(firstUser.Id);
+            TestDataHelper.PrintUserInfo(firstUser);
+            TestDataHelper.PrintUserInfo(secondUser);
+            TestDataHelper.PrintUserInfo(resultUser);
+            Assert.IsTrue(TestDataHelper.CompareUsers(resultUser, secondUser));
         }
 
-        User GenerateUser()
+        public User GenerateUser()
         {
-            User user = new User
-            {
-                Id = Guid.NewGuid(),
-                Email = "test" + (DateTime.Now.Millisecond * new Random().Next(10000)) + "@test.com",
-                FirstName = "name",
-                LastName = "lastname"
-            };
+            User user = TestDataHelper.GenerateUser();
             testUsers.Add(user);
             return user;
         }
 
-        bool CompareUsers(User first, User second)
-        {
-            return first.Id.Equals(second.Id) &
-                   first.Email.Equals(second.Email) &
-                   first.FirstName.Equals(second.FirstName) &
-                   first.LastName.Equals(second.LastName);
-        }
+        
 
         [ClassCleanup()]
         public static void ClassCleanup()
@@ -160,7 +195,7 @@ namespace MeetGenerator.Tests
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
             foreach (User user in testUsers)
             {
-                userRepository.Delete(user.Id);
+                userRepository.DeleteUser(user.Id);
             }
         }
     }

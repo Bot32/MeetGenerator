@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MeetGenerator;
 using MeetGenerator.Model.Repositories;
-using MeetGenerator.Models;
+using MeetGenerator.Model.Models;
 using System.Data.SqlClient;
 using MeetGenerator.Repository.SQL.DataValidators;
+using MeetGenerator.Repository.SQL.Repositories;
+using MeetGenerator.Repository.SQL.Repositories.ObjectBuilder;
 
 namespace MeetGenerator.Repository.SQL
 {
@@ -21,220 +23,102 @@ namespace MeetGenerator.Repository.SQL
         }
 
 
-        public void Create(User user)
+        public void CreateUser(User user)
         {
             string errorsList = UserDataValidator.IsCompleteValidUserObject(user);
             if (errorsList == "OK")
             {
-                PushUserToDatabase(user);
+                DatabaseConnector.PushDataToDatabase(sqlConnection, BuildCreateUserCommand(user));
+            } else
+            {
+                Console.WriteLine(errorsList);
             }
         }
-
-        void PushUserToDatabase(User user)
+        SqlCommand BuildCreateUserCommand(User user)
         {
-            try
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildCreateUserCommand(command, user);
+            SqlCommand command = new SqlCommand();
 
-                    command.ExecuteNonQuery();
-                }
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        void BuildCreateUserCommand(SqlCommand command, User user)
-        {
             command.CommandText = "insert into [dbo].[User] (Id, FirstName, LastName, Email) values (@Id, @FirstName, @LastName, @Email)";
             command.Parameters.AddWithValue("@id", user.Id);
             command.Parameters.AddWithValue("@firstname", user.FirstName);
             command.Parameters.AddWithValue("@lastname", user.LastName);
             command.Parameters.AddWithValue("@email", user.Email);
+
+            return command;
         }
 
 
-        public User Get(Guid id)
+        public User GetUser(Guid id)
         {
-            return GetUserFromDatabase(id);
+            return DatabaseConnector.GetDataFromDatabase<User>
+                (sqlConnection, BuildGetUserByIdCommand(id), new UserBuilder());
         }
-
-        User GetUserFromDatabase(Guid id)
+        SqlCommand BuildGetUserByIdCommand(Guid id)
         {
-            User user;
+            SqlCommand command = new SqlCommand();
 
-            try
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildGetUserCommand(command, id);
-                    user = GetUserFromSqlReader(command);
-                }
-                return user;
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        User GetUserFromSqlReader(SqlCommand command)
-        {
-            User user;
-
-            using (var reader = command.ExecuteReader())
-            {
-                reader.Read();
-                user = new User
-                {
-                    Id = reader.GetGuid(reader.GetOrdinal("ID")),
-                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                    Email = reader.GetString(reader.GetOrdinal("Email"))
-                };
-            }
-
-            return user;
-        }
-        void BuildGetUserCommand(SqlCommand command, Guid id)
-        {
             command.CommandText = "select id, firstname, lastname, email from [dbo].[User] where id = @id";
             command.Parameters.AddWithValue("@id", id);
+
+            return command;
         }
 
 
-        public void Update(User user)
+        public User GetUser(String email)
         {
-            UpdateUserInDatabase(user);
+            return DatabaseConnector.GetDataFromDatabase<User>
+                (sqlConnection, BuildGetUserByEmailCommand(email), new UserBuilder());
+        }
+        SqlCommand BuildGetUserByEmailCommand(String email)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "select id, firstname, lastname, email from [dbo].[User] where email = @email";
+            command.Parameters.AddWithValue("@email", email);
+
+            return command;
         }
 
-        void UpdateUserInDatabase(User user)
+
+        public void UpdateUserInfo(User user)
         {
-            try
+            string errorsList = UserDataValidator.IsCompleteValidUserObject(user);
+            if (errorsList == "OK")
             {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildUpdateUserCommand(command, user);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-            finally
+                DatabaseConnector.PushDataToDatabase(sqlConnection, BuildUpdateUserCommand(user));
+            } else
             {
-                sqlConnection.Close();
+                Console.WriteLine(errorsList);
             }
         }
-        void BuildUpdateUserCommand(SqlCommand command, User user)
+        SqlCommand BuildUpdateUserCommand(User user)
         {
+            SqlCommand command = new SqlCommand();
+
             command.CommandText = "update [dbo].[User] " +
-                "SET FirstName = @FirstName, LastName = @LastName, Email = @Email " + 
+                "SET FirstName = @FirstName, LastName = @LastName, Email = @Email " +
                 "where id = @id";
             command.Parameters.AddWithValue("@id", user.Id);
             command.Parameters.AddWithValue("@firstname", user.FirstName);
             command.Parameters.AddWithValue("@lastname", user.LastName);
             command.Parameters.AddWithValue("@email", user.Email);
+
+            return command;
         }
 
 
-        public void Delete(Guid id)
+        public void DeleteUser(Guid id)
         {
-            DeleteUserFromDatabase(id); 
+            DatabaseConnector.PushDataToDatabase(sqlConnection, BuildDeleteUserCommand(id));
         }
+        SqlCommand BuildDeleteUserCommand(Guid id)
+        {
+            SqlCommand command = new SqlCommand();
 
-        void DeleteUserFromDatabase(Guid id)
-        {
-            try
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildDeleteUserCommand(command, id);
-                    command.ExecuteNonQuery();
-                }
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        void BuildDeleteUserCommand(SqlCommand command, Guid id)
-        {
             command.CommandText = "delete from [dbo].[User] where id = @id";
             command.Parameters.AddWithValue("@id", id);
-        }
 
-
-        public bool IsUserExist(Guid id)
-        {
-            return CheckUserInDatabase(id);
-        }
-
-        bool CheckUserInDatabase(Guid id)
-        {
-            try
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildCheckUserCommand(command, id);
-                    return CheckEmailInSqlReader(command);
-                }
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        bool CheckUserInSqlReader(SqlCommand command)
-        {
-            using (var reader = command.ExecuteReader())
-            {
-                return reader.Read();
-            }
-        }
-        void BuildCheckUserCommand(SqlCommand command, Guid id)
-        {
-            command.CommandText = "select id from [dbo].[User] where id = @id";
-            command.Parameters.AddWithValue("@id", id);
-        }
-
-
-        public bool IsEmailBusy(string email)
-        {
-            return CheckEmailInDatabase(email);
-        }
-
-        bool CheckEmailInDatabase(String email)
-        {
-            try
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    BuildCheckEmailCommand(command, email);
-                    return CheckEmailInSqlReader(command);
-                }
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        bool CheckEmailInSqlReader(SqlCommand command)
-        {
-            using (var reader = command.ExecuteReader())
-            {
-                return reader.Read();
-            }
-        }
-        void BuildCheckEmailCommand(SqlCommand command, String email)
-        {
-            command.CommandText = "select email from [dbo].[User] where email = @email";
-            command.Parameters.AddWithValue("@email", email);
+            return command;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MeetGenerator.Model.Models
 {
     public class Place
     {
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
         public String Address { get; set; }
         public String Description { get; set; }
     }

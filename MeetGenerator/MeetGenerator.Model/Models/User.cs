@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MeetGenerator.Models
+namespace MeetGenerator.Model.Models
 {
     public class User
     {
@@ -11,6 +11,6 @@ namespace MeetGenerator.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public Dictionary<string, string> SocialLinks { get; set; }
+        //public Dictionary<string, string> SocialLinks { get; set; }
     }
 }
