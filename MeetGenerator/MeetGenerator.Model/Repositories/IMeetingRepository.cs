@@ -10,10 +10,17 @@ namespace MeetGenerator.Model.Repositories
     public interface IMeetingRepository
     {
         void CreateMeeting(Meeting meeting);
+
         Meeting GetMeeting(Guid meetingId);
+
+        List<User> GetAllUsersInvitedToMeeting(Guid meetingId);
+
         List<Meeting> GetAllMeetingsCreatedByUser(Guid userId);
+
         void UpdateMeetingInfo(Meeting meeting);
-        void InviteUserToMeeting(Guid userId);
-        void DeleteMeeting(Guid meetingId);
+
+        void InviteUserToMeeting(Guid userId, Guid meetingId);
+
+        void DeleteMeeting(Meeting meeting);
     }
 }

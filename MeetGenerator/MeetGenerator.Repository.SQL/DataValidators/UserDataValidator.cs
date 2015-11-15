@@ -16,6 +16,7 @@ namespace MeetGenerator.Repository.SQL.DataValidators
 
             IsUserObjectExist(user, errorsList);
             IsValidUserFirstName(user.FirstName, errorsList);
+            IsValidUserLastName(user.FirstName, errorsList);
             IsValidEmail(user.Email, errorsList);
 
             if (errorsList.Length == 0) errorsList.Append("OK");
@@ -42,6 +43,20 @@ namespace MeetGenerator.Repository.SQL.DataValidators
             {
                 valid = false;
                 errorsList.AppendLine("User First Name is null.");
+                return valid;
+            }
+
+            return valid;
+        }
+
+        public static bool IsValidUserLastName(String userLastName, StringBuilder errorsList)
+        {
+            bool valid = true;
+
+            if (userLastName == null)
+            {
+                valid = false;
+                errorsList.AppendLine("User Last Name is null.");
                 return valid;
             }
 

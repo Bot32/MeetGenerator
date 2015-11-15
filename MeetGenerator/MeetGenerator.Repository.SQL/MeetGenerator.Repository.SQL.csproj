@@ -42,10 +42,14 @@
   <ItemGroup>
     <Compile Include="DataValidators\UserDataValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\DatabaseHelper.cs" />
+    <Compile Include="Repositories\Utility\CommandList.cs" />
+    <Compile Include="Repositories\Utility\DatabaseConnector.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />
-    <Compile Include="Repositories\ObjectBuilder\IBuilder.cs" />
-    <Compile Include="Repositories\ObjectBuilder\UserBuilder.cs" />
+    <Compile Include="Repositories\ObjectBuilders\IBuilder.cs" />
+    <Compile Include="Repositories\ObjectBuilders\MeetingBuilder.cs" />
+    <Compile Include="Repositories\ObjectBuilders\PlaceBuilder.cs" />
+    <Compile Include="Repositories\ObjectBuilders\UserBuilder.cs" />
+    <Compile Include="Repositories\ObjectBuilders\AllUsersInvitedToMeetingListBuilder.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

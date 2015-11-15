@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MeetGenerator.Model.Models;
 using MeetGenerator.Model.Repositories;
 using System.Data.SqlClient;
+using MeetGenerator.Repository.SQL.Repositories.ObjectBuilders;
+using MeetGenerator.Repository.SQL.Repositories.Utility;
 
 namespace MeetGenerator.Repository.SQL.Repositories
 {
@@ -18,34 +20,55 @@ namespace MeetGenerator.Repository.SQL.Repositories
             sqlConnection = new SqlConnection(connectionString);
         }
 
+
         public void CreateMeeting(Meeting meeting)
         {
-            throw new NotImplementedException();
+            DatabaseConnector.PushCommandToDatabase
+                (sqlConnection, CommandList.Build_CreateMeetingCommand(meeting));
         }
 
-        public void DeleteMeeting(Guid meetingId)
+
+        public Meeting GetMeeting(Guid meetingId)
         {
-            throw new NotImplementedException();
+            Meeting meeting = DatabaseConnector.GetDataFromDatabase<Meeting>
+                (sqlConnection, CommandList.Build_GetMeetingCommand(meetingId), new MeetingBuilder());
+            if (meeting != null)  meeting.InvitedPeople = GetAllUsersInvitedToMeeting(meeting.Id);
+
+            return meeting;
         }
+
+
+        public void InviteUserToMeeting(Guid userId, Guid meetingId)
+        {
+            DatabaseConnector.PushCommandToDatabase
+                (sqlConnection, CommandList.Build_InviteUserToMeetingCommand(userId, meetingId));
+        }
+
+
+        public List<User> GetAllUsersInvitedToMeeting(Guid meetingId)
+        {
+            return DatabaseConnector.GetDataFromDatabase<List<User>>
+                (sqlConnection, CommandList.Build_GetAllUsersInvitedToMeetingCommand(meetingId), 
+                new AllUsersInvitedToMeetingListBuilder());
+        }
+
+
+        public void DeleteMeeting(Meeting meeting)
+        {
+            DatabaseConnector.PushCommandToDatabase(sqlConnection, CommandList.Build_DeleteMeetingCommand(meeting));
+        }
+
+
+        public void UpdateMeetingInfo(Meeting meeting)
+        {
+            DatabaseConnector.PushCommandToDatabase(sqlConnection, CommandList.Build_UpdateMeetingCommand(meeting));
+        }
+
 
         public List<Meeting> GetAllMeetingsCreatedByUser(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Meeting GetMeeting(Guid meetingId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InviteUserToMeeting(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateMeetingInfo(Meeting meeting)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

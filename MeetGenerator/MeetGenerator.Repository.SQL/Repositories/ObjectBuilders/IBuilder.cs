@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilder
+namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
 {
     public interface IBuilder<T>
     {

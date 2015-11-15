@@ -1,5 +1,5 @@
 ﻿using MeetGenerator.Model.Models;
-using MeetGenerator.Repository.SQL.Repositories.ObjectBuilder;
+using MeetGenerator.Repository.SQL.Repositories.ObjectBuilders;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeetGenerator.Repository.SQL.Repositories
+namespace MeetGenerator.Repository.SQL.Repositories.Utility
 {
     public static class DatabaseConnector
     {
-        static public void PushDataToDatabase(SqlConnection sqlConnection, SqlCommand command)
+        static public void PushCommandToDatabase(SqlConnection sqlConnection, SqlCommand command)
         {
             try
             {

@@ -11,14 +11,13 @@ namespace MeetGenerator.Tests
     [TestClass]
     public class UserRepositoryTest
     {
-        static List<User> testUsers = new List<User>();
 
         [TestMethod]
         public void CreateUserTest()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
             user.FirstName = "TestUser";
 
             //act
@@ -35,7 +34,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act
             userRepository.CreateUser(user);
@@ -51,7 +50,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act
 
@@ -65,7 +64,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act
 
@@ -79,7 +78,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act  
             userRepository.CreateUser(user);
@@ -94,7 +93,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act  
             User resultUser = userRepository.GetUser(user.Email);
@@ -108,7 +107,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act
             userRepository.CreateUser(user);
@@ -123,7 +122,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            User user = GenerateUser();
+            User user = TestDataHelper.GenerateUser();
 
             //act
             userRepository.CreateUser(user);
@@ -158,7 +157,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            var firstUser = GenerateUser();
+            var firstUser = TestDataHelper.GenerateUser();
 
             var secondUser = new User
             {
@@ -180,23 +179,20 @@ namespace MeetGenerator.Tests
             Assert.IsTrue(TestDataHelper.CompareUsers(resultUser, secondUser));
         }
 
-        public User GenerateUser()
+        [TestCleanup()]
+        public void MyTestCleanup()
         {
-            User user = TestDataHelper.GenerateUser();
-            testUsers.Add(user);
-            return user;
+            TestDataHelper.ClearDB();
         }
 
-        
-
-        [ClassCleanup()]
-        public static void ClassCleanup()
-        {
-            var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-            foreach (User user in testUsers)
-            {
-                userRepository.DeleteUser(user.Id);
-            }
-        }
+        //[ClassCleanup()]
+        //public static void ClassCleanup()
+        //{
+        //    var userRepository = new UserRepository(Properties.Resources.ConnectionString);
+        //    foreach (User user in testUsers)
+        //    {
+        //        userRepository.DeleteUser(user.Id);
+        //    }
+        //}
     }
 }
