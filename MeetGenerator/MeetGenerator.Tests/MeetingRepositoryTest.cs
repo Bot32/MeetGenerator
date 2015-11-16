@@ -15,12 +15,14 @@ namespace MeetGenerator.Tests
         public void CreateMeetingTest()
         {
             //arange
+            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
             MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
             UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
             Meeting meeting = TestDataHelper.GenerateMeeting();
 
             //act
             userRep.CreateUser(meeting.Owner);
+            placeRep.CreatePlace(meeting.Place);
             meetRep.CreateMeeting(meeting);
             Meeting resultMeeting = meetRep.GetMeeting(meeting.Id);
 
@@ -35,12 +37,14 @@ namespace MeetGenerator.Tests
         public void InviteUserToMeetingTest()
         {
             //arange
+            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
             MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
             UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
             Meeting meeting = TestDataHelper.GenerateMeeting();
 
             //act
             userRep.CreateUser(meeting.Owner);
+            placeRep.CreatePlace(meeting.Place);
             meetRep.CreateMeeting(meeting);
 
             foreach (User user in meeting.InvitedPeople)
@@ -63,12 +67,14 @@ namespace MeetGenerator.Tests
         public void DeleteMeetingTest()
         {
             //arange
+            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
             MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
             UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
             Meeting meeting = TestDataHelper.GenerateMeeting();
 
             //act
             userRep.CreateUser(meeting.Owner);
+            placeRep.CreatePlace(meeting.Place);
             meetRep.CreateMeeting(meeting);
             foreach (User user in meeting.InvitedPeople)
             {
@@ -93,6 +99,7 @@ namespace MeetGenerator.Tests
         public void UpdateMeetingTest()
         {
             //arange
+            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
             MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
             UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
             Meeting firstMeeting = TestDataHelper.GenerateMeeting();
@@ -102,8 +109,9 @@ namespace MeetGenerator.Tests
             secondMeeting.Place = firstMeeting.Place;
             secondMeeting.Title = "secondMeeting";
             secondMeeting.Description = "second descr";
-            
+
             //act
+            placeRep.CreatePlace(firstMeeting.Place);
             userRep.CreateUser(firstMeeting.Owner);
             meetRep.CreateMeeting(firstMeeting);
 
@@ -116,6 +124,36 @@ namespace MeetGenerator.Tests
             TestDataHelper.PrintMeetingInfo(secondMeeting);
             TestDataHelper.PrintMeetingInfo(resultMeeting);
             Assert.IsTrue(TestDataHelper.CompareMeetings(secondMeeting, resultMeeting));
+        }
+
+        [TestMethod]
+        public void GetAllMeetingsCreatedByUserTest()
+        {
+            //arange
+            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
+            MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
+            UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
+            User user = TestDataHelper.GenerateUser();
+            List<Meeting> meetingList = new List<Meeting>();
+
+            for (int i = 0; i == 5; i++)
+            {
+                Meeting meeting = TestDataHelper.GenerateMeeting();
+                meeting.Owner = user;
+                meetingList.Add(meeting);
+            }
+
+            //act
+            userRep.CreateUser(user);
+            foreach(Meeting meeting in meetingList)
+            {
+                placeRep.CreatePlace(meeting.Place);
+                meetRep.CreateMeeting(meeting);
+            }
+            List<Meeting> resultMeetingList = meetRep.GetAllMeetingsCreatedByUser(user.Id);
+
+            //assert
+            Assert.IsTrue(TestDataHelper.CompareMeetingsLists(meetingList, resultMeetingList));
         }
 
         [TestCleanup()]

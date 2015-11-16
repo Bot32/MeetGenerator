@@ -39,22 +39,28 @@ namespace MeetGenerator.Tests
             Meeting meeting = new Meeting
             {
                 Id = Guid.NewGuid(),
-                Owner = TestDataHelper.GenerateUser(),
+                Owner = GenerateUser(),
                 Date = DateTime.Now,
                 Title = "Best test meeting #" + Index,
                 Description = "Really best test meeting ever",
-                Place = new Place
-                {
-                    Id = Guid.NewGuid(),
-                    Address = "Pushkin st., Kolotushkin house #" + Index,
-                    Description = "Nobody home"
-                },
+                Place = GeneratePlace(),
                 InvitedPeople = new List<User>(),
             };
 
             for (int i = 0; i < 5; i++) meeting.InvitedPeople.Add(GenerateUser());
 
             return meeting;
+        }
+
+        static public Place GeneratePlace()
+        {
+
+            return new Place
+            {
+                Id = Guid.NewGuid(),
+                Address = "Pushkin st., Kolotushkin house #" + Index,
+                Description = "Nobody home"
+            };
         }
 
         static public bool CompareUsers(User first, User second)
@@ -72,8 +78,7 @@ namespace MeetGenerator.Tests
                    //first.Date.Equals(second.Date) &
                    first.Title.Equals(second.Title) &
                    first.Description.Equals(second.Description) &
-                   first.Place.Id.Equals(second.Place.Id);
-                   
+                   first.Place.Id.Equals(second.Place.Id);      
         }
 
         static public bool CompareInvitedUsersLists(List<User> first, List<User> second)
@@ -93,6 +98,39 @@ namespace MeetGenerator.Tests
 
             if ((compareInvitedPeopleCount == first.Count) &
                 (compareInvitedPeopleCount == second.Count))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        static public bool ComparePlaces(Place first, Place second)
+        {
+            return first.Id.Equals(second.Id) &
+                   first.Address.Equals(second.Address) &
+                   first.Description.Equals(second.Description);
+        }
+
+        static public bool CompareMeetingsLists(List<Meeting> first, List<Meeting> second)
+        {
+            int compareMeetingsCount = 0;
+
+            foreach (Meeting m1 in first)
+            {
+                foreach (Meeting m2 in second)
+                {
+                    if (m1.Id.Equals(m2.Id))
+                    {
+                        compareMeetingsCount++;
+                    }
+                }
+            }
+
+            if ((compareMeetingsCount == first.Count) &
+                (compareMeetingsCount == second.Count))
             {
                 return true;
             }
@@ -127,6 +165,13 @@ namespace MeetGenerator.Tests
             {
                 Console.WriteLine(user.Email);
             }
+        }
+
+        static public void PrintPlaceInfo(Place place)
+        {
+            Console.WriteLine("Id = " + place.Id);
+            Console.WriteLine("Address = " + place.Address);
+            Console.WriteLine("Description = " + place.Description);
         }
 
         static public void ClearDB()

@@ -10,8 +10,8 @@ namespace MeetGenerator.Model.Repositories
     public interface IPlaceRepository
     {
         void CreatePlace(Place place);
-        Place GetPlace(Guid id);
+        Place GetPlace(Guid placeId);
         void UpdatePlaceInfo(Place place);
-        void DeletePlace(Guid id);
+        void DeletePlace(Guid placeId);
     }
 }

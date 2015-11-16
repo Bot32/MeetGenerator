@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="DataValidators\UserDataValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ObjectBuilders\AllMeetingsIdCreatedByUser.cs" />
+    <Compile Include="Repositories\PlaceRepository.cs" />
     <Compile Include="Repositories\Utility\CommandList.cs" />
     <Compile Include="Repositories\Utility\DatabaseConnector.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />

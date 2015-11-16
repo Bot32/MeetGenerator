@@ -72,9 +72,7 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
         {
             SqlCommand command = new SqlCommand();
 
-            command.CommandText = "insert into [dbo].[Place] (ID, Address, Description) " +
-                                  "values (@Place_Id, @Place_Address, @Place_Description); " +
-                                  "insert into [dbo].[Meeting] (ID, OwnerID, Date, Title, Description, PlaceID) " +
+            command.CommandText = "insert into [dbo].[Meeting] (ID, OwnerID, Date, Title, Description, PlaceID) " +
                                   "values (@Meeting_Id, @Meeting_OwnerID, @Meeting_Date, @Meeting_Title, @Meeting_Description, @Meeting_PlaceID);";
 
             command.Parameters.AddWithValue("@Meeting_Id", meeting.Id);
@@ -83,10 +81,6 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
             command.Parameters.AddWithValue("@Meeting_Title", meeting.Title);
             command.Parameters.AddWithValue("@Meeting_Description", meeting.Description);
             command.Parameters.AddWithValue("@Meeting_PlaceID", meeting.Place.Id);
-
-            command.Parameters.AddWithValue("@Place_Id", meeting.Place.Id);
-            command.Parameters.AddWithValue("@Place_Address", meeting.Place.Address);
-            command.Parameters.AddWithValue("@Place_Description", meeting.Place.Description);
 
             return command;
         }
@@ -164,6 +158,67 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
             command.Parameters.AddWithValue("@Title", meeting.Title);
             command.Parameters.AddWithValue("@Description", meeting.Description);
             //command.Parameters.AddWithValue("@PlaceID", meeting.Place.Id);
+
+            return command;
+        }
+
+        public static SqlCommand Build_CreatePlaceCommand(Place place)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "insert into [dbo].[Place] (ID, Address, Description) " +
+                                  "values (@Place_Id, @Place_Address, @Place_Description); ";
+
+            command.Parameters.AddWithValue("@Place_Id", place.Id);
+            command.Parameters.AddWithValue("@Place_Address", place.Address);
+            command.Parameters.AddWithValue("@Place_Description", place.Description);
+
+            return command;
+        }
+
+        public static SqlCommand Build_GetPlaceCommand(Guid placeId)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "select id, Address, Description from [dbo].[Place] where id = @placeId";
+            command.Parameters.AddWithValue("@placeId", placeId);
+
+            return command;
+        }
+
+        public static SqlCommand Build_DeletePlaceCommand(Guid placeId)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "delete from [dbo].[Place] where ID = @PlaceID;";
+            command.Parameters.AddWithValue("@PlaceID", placeId);
+
+            return command;
+        }
+
+        public static SqlCommand Build_UpdatePlaceCommand(Place place)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "update [dbo].[Place] " +
+                "SET Address = @Address, Description = @Description " +
+                "where id = @placeId";
+            command.Parameters.AddWithValue("@placeId", place.Id);
+            command.Parameters.AddWithValue("@Address", place.Address);
+            command.Parameters.AddWithValue("@Description", place.Description);
+
+            return command;
+        }
+
+        public static SqlCommand Build_GetAllMeetingsIdCreatedByUserCommand(Guid userId)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "select m.ID " +
+                                  "from [dbo].[Meeting] m " +
+                                  "join [dbo].[User] u on u.ID = m.OwnerID " +
+                                  "where u.ID = @userId";
+            command.Parameters.AddWithValue("@userId", userId);
 
             return command;
         }

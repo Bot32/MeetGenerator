@@ -55,6 +55,7 @@ namespace MeetGenerator.Repository.SQL.Repositories
 
         public void DeleteMeeting(Meeting meeting)
         {
+            //Чтобы удалить Meeting, нужно удалить все Invitations, где есть этот Meeting
             DatabaseConnector.PushCommandToDatabase(sqlConnection, CommandList.Build_DeleteMeetingCommand(meeting));
         }
 
@@ -67,7 +68,18 @@ namespace MeetGenerator.Repository.SQL.Repositories
 
         public List<Meeting> GetAllMeetingsCreatedByUser(Guid userId)
         {
-            throw new NotImplementedException();
+            List<Meeting> allMeetingsCreatedByUser = new List<Meeting>();
+
+            allMeetingsCreatedByUser = DatabaseConnector.GetDataFromDatabase<List<Meeting>>
+                (sqlConnection, CommandList.Build_GetAllMeetingsIdCreatedByUserCommand(userId), new AllMeetingsIdCreatedByUser());
+
+            for (int i = 0; i < allMeetingsCreatedByUser.Count; i++)
+            {
+                Meeting meeting = allMeetingsCreatedByUser[i];
+                meeting = GetMeeting(meeting.Id);
+            }
+
+            return allMeetingsCreatedByUser;
         }
 
     }
