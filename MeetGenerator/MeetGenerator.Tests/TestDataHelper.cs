@@ -44,10 +44,14 @@ namespace MeetGenerator.Tests
                 Title = "Best test meeting #" + Index,
                 Description = "Really best test meeting ever",
                 Place = GeneratePlace(),
-                InvitedPeople = new List<User>(),
+                InvitedPeople = new Dictionary<Guid, User>(),
             };
 
-            for (int i = 0; i < 5; i++) meeting.InvitedPeople.Add(GenerateUser());
+            for (int i = 0; i < 5; i++)
+            {
+                User user = GenerateUser();
+                meeting.InvitedPeople.Add(user.Id, user);
+            };
 
             return meeting;
         }
@@ -81,7 +85,8 @@ namespace MeetGenerator.Tests
                    first.Place.Id.Equals(second.Place.Id);      
         }
 
-        static public bool CompareInvitedUsersLists(List<User> first, List<User> second)
+        static public bool CompareInvitedUsersLists
+            (Dictionary<Guid, User>.ValueCollection first, Dictionary<Guid, User>.ValueCollection second)
         {
             int compareInvitedPeopleCount = 0;
 
@@ -161,7 +166,7 @@ namespace MeetGenerator.Tests
             Console.WriteLine("Address = " + meeting.Place.Address);
             Console.WriteLine("Description = " + meeting.Place.Description);
             Console.WriteLine("******Invited users:");
-            foreach(User user in meeting.InvitedPeople)
+            foreach(User user in meeting.InvitedPeople.Values)
             {
                 Console.WriteLine(user.Email);
             }

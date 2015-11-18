@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataValidators\UserDataValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ObjectBuilders\AllMeetingsIdCreatedByUser.cs" />
     <Compile Include="Repositories\PlaceRepository.cs" />

@@ -8,14 +8,15 @@ using System.Data.SqlClient;
 
 namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
 {
-    class AllUsersInvitedToMeetingListBuilder : IBuilder<List<User>>
+    class AllUsersInvitedToMeetingIdListBuilder : IBuilder<Dictionary<Guid, User>>
     {
-        public List<User> Build(SqlDataReader reader)
+        public Dictionary<Guid, User> Build(SqlDataReader reader)
         {
-            List<User> invitedUsersIdList = new List<User>();
+            Dictionary<Guid, User> invitedUsersIdList = new Dictionary<Guid, User>();
             while (reader.Read())
             {
-                invitedUsersIdList.Add( 
+                invitedUsersIdList.Add(
+                    reader.GetGuid(reader.GetOrdinal("UserID")),
                     new User
                     {
                         Id = reader.GetGuid(reader.GetOrdinal("UserID")),

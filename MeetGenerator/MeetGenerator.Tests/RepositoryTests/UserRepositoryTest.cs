@@ -4,7 +4,7 @@ using MeetGenerator.Repository.SQL;
 using MeetGenerator.Model.Models;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using MeetGenerator.Repository.SQL.DataValidators;
+using MeetGenerator.Repository.SQL.Repositories;
 
 namespace MeetGenerator.Tests
 {
@@ -169,7 +169,7 @@ namespace MeetGenerator.Tests
 
             //act
             userRepository.CreateUser(firstUser);
-            userRepository.UpdateUserInfo(secondUser);
+            userRepository.UpdateUser(secondUser);
 
             //asserts
             var resultUser = userRepository.GetUser(firstUser.Id);

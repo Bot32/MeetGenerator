@@ -13,7 +13,7 @@ namespace MeetGenerator.Model.Repositories
 
         Meeting GetMeeting(Guid meetingId);
 
-        List<User> GetAllUsersInvitedToMeeting(Guid meetingId);
+        Dictionary<Guid, User> GetAllUsersInvitedToMeeting(Guid meetingId);
 
         List<Meeting> GetAllMeetingsCreatedByUser(Guid userId);
 

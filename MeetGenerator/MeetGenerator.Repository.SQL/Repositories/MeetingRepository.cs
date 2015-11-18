@@ -45,11 +45,11 @@ namespace MeetGenerator.Repository.SQL.Repositories
         }
 
 
-        public List<User> GetAllUsersInvitedToMeeting(Guid meetingId)
+        public Dictionary<Guid, User> GetAllUsersInvitedToMeeting(Guid meetingId)
         {
-            return DatabaseConnector.GetDataFromDatabase<List<User>>
-                (sqlConnection, CommandList.Build_GetAllUsersInvitedToMeetingCommand(meetingId), 
-                new AllUsersInvitedToMeetingListBuilder());
+            return DatabaseConnector.GetDataFromDatabase<Dictionary<Guid, User>>
+                (sqlConnection, CommandList.Build_GetAllUsersIdInvitedToMeetingCommand(meetingId), 
+                new AllUsersInvitedToMeetingIdListBuilder());
         }
 
 

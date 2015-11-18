@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4392E072-14C8-4147-A1DA-844D31C0C93B}</ProjectGuid>
+    <ProjectGuid>{C39F938E-E857-4565-A82A-708C00F0821D}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MeetGenerator</RootNamespace>
-    <AssemblyName>MeetGenerator</AssemblyName>
+    <RootNamespace>MeetGenerator.API</RootNamespace>
+    <AssemblyName>MeetGenerator.API</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -86,9 +86,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PlaceController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="DataValidators\UserDataValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HttpActionResults\NotFoundWithErrorResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +107,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeetGenerator.Model\MeetGenerator.Model.csproj">
+      <Project>{0f39c134-798f-459a-b0e0-80780f07eb2a}</Project>
+      <Name>MeetGenerator.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeetGenerator.Repository.SQL\MeetGenerator.Repository.SQL.csproj">
+      <Project>{ec3e8dd9-1228-4f64-acfc-a47bbab58630}</Project>
+      <Name>MeetGenerator.Repository.SQL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -118,9 +132,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63909</DevelopmentServerPort>
+          <DevelopmentServerPort>50208</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63909/</IISUrl>
+          <IISUrl>http://localhost:61689/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

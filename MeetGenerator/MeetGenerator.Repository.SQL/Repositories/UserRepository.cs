@@ -7,12 +7,11 @@ using MeetGenerator;
 using MeetGenerator.Model.Repositories;
 using MeetGenerator.Model.Models;
 using System.Data.SqlClient;
-using MeetGenerator.Repository.SQL.DataValidators;
 using MeetGenerator.Repository.SQL.Repositories;
 using MeetGenerator.Repository.SQL.Repositories.ObjectBuilders;
 using MeetGenerator.Repository.SQL.Repositories.Utility;
 
-namespace MeetGenerator.Repository.SQL
+namespace MeetGenerator.Repository.SQL.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -26,15 +25,8 @@ namespace MeetGenerator.Repository.SQL
 
         public void CreateUser(User user)
         {
-            string errorsList = UserDataValidator.IsCompleteValidUserObject(user);
-            if (errorsList == "OK")
-            {
-                DatabaseConnector.PushCommandToDatabase
-                    (sqlConnection, CommandList.Build_CreateUserCommand(user));
-            } else
-            {
-                Console.WriteLine(errorsList);
-            }
+            DatabaseConnector.PushCommandToDatabase
+                (sqlConnection, CommandList.Build_CreateUserCommand(user));
         }
 
         public User GetUser(Guid id)
@@ -49,17 +41,10 @@ namespace MeetGenerator.Repository.SQL
                 (sqlConnection, CommandList.Build_GetUserByEmailCommand(email), new UserBuilder());
         }
 
-        public void UpdateUserInfo(User user)
+        public void UpdateUser(User user)
         {
-            string errorsList = UserDataValidator.IsCompleteValidUserObject(user);
-            if (errorsList == "OK")
-            {
-                DatabaseConnector.PushCommandToDatabase
-                    (sqlConnection, CommandList.Build_UpdateUserCommand(user));
-            } else
-            {
-                Console.WriteLine(errorsList);
-            }
+            DatabaseConnector.PushCommandToDatabase
+                (sqlConnection, CommandList.Build_UpdateUserCommand(user));
         }
 
         public void DeleteUser(Guid id)

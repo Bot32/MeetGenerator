@@ -32,7 +32,7 @@ namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
                     Address = reader.GetString(reader.GetOrdinal("Address")),
                     Description = reader.GetString(reader.GetOrdinal("Description"))
                 };
-                meeting.InvitedPeople = new List<User>();
+                meeting.InvitedPeople = new Dictionary<Guid, User>();
 
                 return meeting;
             }

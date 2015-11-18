@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MeetGenerator.Model.Models;
 using System.Text.RegularExpressions;
-using MeetGenerator.Repository.SQL.DataValidators;
+using MeetGenerator.DataValidators;
 
 namespace MeetGenerator.Tests
 {
@@ -20,7 +20,7 @@ namespace MeetGenerator.Tests
         {   
             //arrange
             String firstName = "Вася";
-            StringBuilder ErrorList = new StringBuilder();
+            List<string> ErrorList = new List<string>();
             bool result;
 
             //act
@@ -36,7 +36,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             String firstName = null;
-            StringBuilder ErrorList = new StringBuilder();
+            List<string> ErrorList = new List<string>(); ;
             bool result;
 
             //act
@@ -52,7 +52,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             bool result = true;
-            StringBuilder ErrorList = new StringBuilder();
+            List<string> ErrorList = new List<string>();
             List<String> emails = new List<String>();
             emails.Add("joe@home.org");
             emails.Add("joe@joebob.name");
@@ -82,7 +82,7 @@ namespace MeetGenerator.Tests
         {
             //arrange
             bool result = false;
-            StringBuilder ErrorList = new StringBuilder();
+            List<string> ErrorList = new List<string>();
             List<String> emails = new List<String>();
             emails.Add("joe"); // should fail
             emails.Add("joe@home"); // should fail
@@ -122,14 +122,14 @@ namespace MeetGenerator.Tests
                 LastName = "Lastname",
                 Id = Guid.NewGuid()
             };
-            string result;
+            List<string> result;
 
             //act
             result = UserDataValidator.IsCompleteValidUserObject(user);
             Console.WriteLine(result);
 
             //assert
-            Assert.IsTrue(result == "OK");
+            Assert.IsTrue(result.Count == 0);
         }
 
         [TestMethod]
@@ -143,14 +143,14 @@ namespace MeetGenerator.Tests
                 LastName = null,
                 Id = Guid.NewGuid()
             };
-            string result;
+            List<string> result;
 
             //act
             result = UserDataValidator.IsCompleteValidUserObject(user);
             Console.WriteLine(result);
 
             //assert
-            Assert.IsFalse(result == "OK");
+            Assert.IsFalse(result.Count == 0);
         }
     }
 }

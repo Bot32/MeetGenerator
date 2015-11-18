@@ -47,7 +47,7 @@ namespace MeetGenerator.Tests
             placeRep.CreatePlace(meeting.Place);
             meetRep.CreateMeeting(meeting);
 
-            foreach (User user in meeting.InvitedPeople)
+            foreach (User user in meeting.InvitedPeople.Values)
             {
                 userRep.CreateUser(user);
                 meetRep.InviteUserToMeeting(user.Id, meeting.Id);
@@ -59,7 +59,8 @@ namespace MeetGenerator.Tests
             //assert
             TestDataHelper.PrintMeetingInfo(meeting);
             TestDataHelper.PrintMeetingInfo(resultMeeting);
-            Assert.IsTrue(TestDataHelper.CompareInvitedUsersLists(meeting.InvitedPeople, resultMeeting.InvitedPeople));
+            Assert.IsTrue(TestDataHelper.CompareInvitedUsersLists
+                (meeting.InvitedPeople.Values, resultMeeting.InvitedPeople.Values));
 
         }
 
@@ -76,7 +77,7 @@ namespace MeetGenerator.Tests
             userRep.CreateUser(meeting.Owner);
             placeRep.CreatePlace(meeting.Place);
             meetRep.CreateMeeting(meeting);
-            foreach (User user in meeting.InvitedPeople)
+            foreach (User user in meeting.InvitedPeople.Values)
             {
                 userRep.CreateUser(user);
                 meetRep.InviteUserToMeeting(user.Id, meeting.Id);

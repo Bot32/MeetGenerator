@@ -15,6 +15,6 @@ namespace MeetGenerator.Model.Models
         public String Title { get; set; }
         public String Description { get; set; }
         public Place Place { get; set; }
-        public List<User> InvitedPeople { get; set; }
+        public Dictionary<Guid, User> InvitedPeople { get; set; }
     }
 }

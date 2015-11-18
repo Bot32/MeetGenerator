@@ -12,7 +12,7 @@ namespace MeetGenerator.Model.Repositories
         void CreateUser(User user);
         User GetUser(Guid user);
         User GetUser(String email);
-        void UpdateUserInfo(User user);
+        void UpdateUser(User user);
         void DeleteUser(Guid userId);
     }
 }

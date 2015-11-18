@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using MeetGenerator.Model.Models;
 
-namespace MeetGenerator.Repository.SQL.DataValidators
+namespace MeetGenerator.DataValidators
 {
     public static class UserDataValidator
     {

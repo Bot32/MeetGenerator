@@ -120,7 +120,7 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
             return command;
         }
 
-        public static SqlCommand Build_GetAllUsersInvitedToMeetingCommand(Guid meetingId)
+        public static SqlCommand Build_GetAllUsersIdInvitedToMeetingCommand(Guid meetingId)
         {
             SqlCommand command = new SqlCommand();
 
