@@ -1,7 +1,0 @@
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\bin\Debug\MeetGenerator.Repository.SQL.dll
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\bin\Debug\MeetGenerator.Repository.SQL.pdb
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\bin\Debug\MeetGenerator.Model.dll
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\bin\Debug\MeetGenerator.Model.pdb
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\obj\Debug\MeetGenerator.Repository.SQL.csprojResolveAssemblyReference.cache
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\obj\Debug\MeetGenerator.Repository.SQL.dll
-D:\Projects\MeetGenerator\MeetGenerator\MeetGenerator.Repository.SQL\obj\Debug\MeetGenerator.Repository.SQL.pdb

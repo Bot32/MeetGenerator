@@ -21,13 +21,9 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-bin/
-obj/
-
 
 # Visual Studio 2015 cache/options directory
 .vs/
-
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
