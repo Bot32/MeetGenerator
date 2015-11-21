@@ -13,7 +13,7 @@ namespace MeetGenerator.Tests
     {
 
         [TestMethod]
-        public void CreateUserTest()
+        public void Create_ShouldCreateUser()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -30,7 +30,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void GetUserByEmailTest()
+        public void Get_ByEmail_ShouldReturnUser()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -38,43 +38,43 @@ namespace MeetGenerator.Tests
 
             //act
             userRepository.CreateUser(user);
+            var resultUser = userRepository.GetUser(user.Email);
 
             //asserts
-            var resultUser = userRepository.GetUser(user.Email);
             TestDataHelper.PrintUserInfo(resultUser);
             Assert.IsTrue(TestDataHelper.CompareUsers(user, resultUser));
         }
 
         [TestMethod]
-        public void GetNonExistUserByEmailTest()
+        public void Get_NonExistUserByEmail_ShoulReturnNull()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
-
-            //asserts
             var resultUser = userRepository.GetUser(user.Email);
+
+            //asserts
             Assert.IsNull(resultUser);
         }
 
         [TestMethod]
-        public void GetNotExistUserByIdTest()
+        public void Get_NotExistUserById_ShouldReturnNull()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
+            var resultUser = userRepository.GetUser(user.Id);
 
             //asserts
-            var resultUser = userRepository.GetUser(user.Id);
             Assert.IsNull(resultUser);
         }
 
         [TestMethod]
-        public void BusyEmailTest()
+        public void IsEmailBusy_WithBusyEmail_ShouldReturnBusy()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -89,7 +89,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void NotBusyEmailTest()
+        public void IsEmailBusy_ShoildReturnNotBusy()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -103,7 +103,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void UserExistTest()
+        public void IsUserExist_ShouldExist()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -118,7 +118,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void DeleteUserTest()
+        public void Delete_ShouldDeleteUser()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -153,7 +153,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void UpdateUserTest()
+        public void Update_ShouldUpdateUser()
         {
             //arrange
             var userRepository = new UserRepository(Properties.Resources.ConnectionString);
@@ -184,15 +184,5 @@ namespace MeetGenerator.Tests
         {
             TestDataHelper.ClearDB();
         }
-
-        //[ClassCleanup()]
-        //public static void ClassCleanup()
-        //{
-        //    var userRepository = new UserRepository(Properties.Resources.ConnectionString);
-        //    foreach (User user in testUsers)
-        //    {
-        //        userRepository.DeleteUser(user.Id);
-        //    }
-        //}
     }
 }

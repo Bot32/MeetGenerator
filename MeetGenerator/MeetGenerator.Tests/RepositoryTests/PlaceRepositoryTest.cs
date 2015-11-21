@@ -39,7 +39,7 @@ namespace MeetGenerator.Tests
         #endregion
 
         [TestMethod]
-        public void CreatePlaceTest()
+        public void Create_ShouldCreate()
         {
             //arrange
             var placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -56,7 +56,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void DeletePlaceTest()
+        public void Delete_ShouldDelete()
         {
             //arrange
             var placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -79,7 +79,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void UpdatePlaceTest()
+        public void Update_ShouldUpdate()
         {
             //arrange
             var placeRep = new PlaceRepository(Properties.Resources.ConnectionString);

@@ -16,9 +16,18 @@ namespace MeetGenerator.API.Controllers
 {
     public class UserController : ApiController
     {
-        IUserRepository repository = new UserRepository
-            ("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-        //(ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString);  // Не работает wtf
+        IUserRepository _userRepository;
+
+        public UserController()
+        {
+            _userRepository = new UserRepository
+                (ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString);
+        }
+
+        public UserController(String connectionString)
+        {
+            _userRepository = new UserRepository(connectionString);
+        }
 
         // POST: api/User/Create
         [HttpPost]
@@ -26,45 +35,39 @@ namespace MeetGenerator.API.Controllers
         {  
             List<string> errorList = UserDataValidator.IsCompleteValidUserObject(user);
 
-            if (errorList.Count == 0)
-            {
-                if (Get(user.Email) is NotFoundResult)
-                {
-                    user.Id = Guid.NewGuid();
-                    repository.CreateUser(user);
-                    return Created("", user);
-                }
-                else
-                {
-                    return BadRequest("Email is busy.");
-                }
-            }
-            else
-            {
+            if (errorList.Count != 0)
                 return BadRequest("Invalid model state.");
-            }
+
+            if (_userRepository.GetUser(user.Email) != null)
+                return BadRequest("Email is busy.");
+
+            user.Id = Guid.NewGuid();
+            _userRepository.CreateUser(user);
+
+            return Created("", user);
         }
 
         // GET: api/User/Get
         [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
-            User user = repository.GetUser(id);
+            User user = _userRepository.GetUser(id);
+
             if (user == null)
-            {
                 return NotFound();
-            }
+
             return Ok(user);
         }
 
         // GET: api/User/Get
+        [HttpGet]
         public IHttpActionResult Get(String email)
         {
-            User user = repository.GetUser(email);
+            User user = _userRepository.GetUser(email);
+
             if (user == null)
-            {
                 return NotFound();
-            }
+
             return Ok(user);
         }
 
@@ -74,37 +77,27 @@ namespace MeetGenerator.API.Controllers
         {
             List<string> errorList = UserDataValidator.IsCompleteValidUserObject(user);
 
-            if (errorList.Count == 0)
-            {
-                if (Get(user.Id) is OkNegotiatedContentResult<User>)
-                {
-                    repository.UpdateUser(user);
-                    return Created("", user);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
+            if (errorList.Count != 0)
                 return BadRequest("Invalid model state.");
-            }
+
+            if (_userRepository.GetUser(user.Id) == null)
+                return NotFound();
+
+            _userRepository.UpdateUser(user);
+
+            return Created("", user);
         }
 
         // DELETE: api/User/Delete
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {
-            if (Get(id) is NotFoundResult)
-            {
+            if (_userRepository.GetUser(id) == null)
                 return NotFound();
-            }
-            else
-            {
-                repository.DeleteUser(id);
-                return Ok();
-            }
+
+            _userRepository.DeleteUser(id);
+        
+            return Ok();
         }
 
     }

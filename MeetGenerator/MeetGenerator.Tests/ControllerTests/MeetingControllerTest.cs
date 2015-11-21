@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using MeetGenerator.Repository.SQL.Repositories;
 using MeetGenerator.API.HttpActionResults;
+using MeetGenerator.Tests.Properties;
 
 namespace MeetGenerator.Tests.ControllerTests
 {
@@ -13,12 +14,12 @@ namespace MeetGenerator.Tests.ControllerTests
     public class MeetingControllerTest
     {
         [TestMethod]
-        public void CreateTest_ShouldReturnCreated()
+        public void Create_ShouldReturnCreated()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -32,10 +33,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithNullField_ShouldReturnBadRequest()
+        public void Create_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var meetController = new MeetingController();
+            var meetController = new MeetingController(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Owner = null;
 
@@ -48,10 +49,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithNonExistOwner_ShouldReturnNotFound()
+        public void Create_WithNonExistOwner_ShouldReturnNotFound()
         {
             //arrange
-            var meetController = new MeetingController();
+            var meetController = new MeetingController(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -63,11 +64,11 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithNonExistPlace_ShouldReturnNotFound()
+        public void Create_WithNonExistPlace_ShouldReturnNotFound()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -80,11 +81,11 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_ById_ShouldReturnOk()
+        public void Get_ById_ShouldReturnOk()
         {
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -99,9 +100,9 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_NonExistMeetingById_ShouldReturnNotFound()
+        public void Get_NonExistMeetingById_ShouldReturnNotFound()
         {
-            var meetController = new MeetingController();
+            var meetController = new MeetingController(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -113,12 +114,12 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_ShouldReturnCreated()
+        public void Update_ShouldReturnCreated()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -135,10 +136,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_WithNullField_ShouldReturnBadRequest()
+        public void Update_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var meetController = new MeetingController();
+            var meetController = new MeetingController(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Owner = null;
 
@@ -150,12 +151,12 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_WithNonExistId_ShouldReturnNotFound()
+        public void Update_WithNonExistId_ShouldReturnNotFound()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -170,12 +171,12 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_ShouldReturnOk()
+        public void Delete_ShouldReturnOk()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -194,9 +195,9 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_NonExistMeeting_ShouldReturnNotFound()
+        public void Delete_NonExistMeeting_ShouldReturnNotFound()
         {
-            var meetController = new MeetingController();
+            var meetController = new MeetingController(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             //act
@@ -207,13 +208,13 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void InviteUserToMeetingTest_ShouldReturnCreated()
+        public void InviteUserToMeeting_ShouldReturnCreated()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var meetRep = new MeetingRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var meetRep = new MeetingRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
 
             foreach (User user in meet.InvitedPeople.Values)
@@ -245,13 +246,13 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void InviteUserToMeetingTest_NonExistUser_ShouldNotFound()
+        public void InviteUserToMeeting_NonExistUser_ShouldNotFound()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var meetRep = new MeetingRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var meetRep = new MeetingRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
 
@@ -268,13 +269,11 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void InviteUserToMeetingTest_NonExistMeet_ShouldNotFound()
+        public void InviteUserToMeeting_NonExistMeet_ShouldNotFound()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var meetRep = new MeetingRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
 
@@ -287,13 +286,13 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void InviteUserToMeetingTest_Alreadyinvited_ShouldReturnBadRequest()
+        public void InviteUserToMeeting_Alreadyinvited_ShouldReturnBadRequest()
         {
             //arrange
-            var meetController = new MeetingController();
-            var userRep = new UserRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var meetRep = new MeetingRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
-            var placeRep = new PlaceRepository("Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True;");
+            var meetController = new MeetingController(Resources.ConnectionString);
+            var userRep = new UserRepository(Resources.ConnectionString);
+            var meetRep = new MeetingRepository(Resources.ConnectionString);
+            var placeRep = new PlaceRepository(Resources.ConnectionString);
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
 
@@ -304,6 +303,7 @@ namespace MeetGenerator.Tests.ControllerTests
             meetController.Create(meet);
             Meeting resultMeet = meetRep.GetMeeting(meet.Id);
             meetController.InviteUserToMeeting(user.Id, meet.Id);
+
             IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
 
 

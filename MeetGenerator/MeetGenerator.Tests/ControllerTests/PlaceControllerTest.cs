@@ -4,6 +4,7 @@ using MeetGenerator.API.Controllers;
 using MeetGenerator.Model.Models;
 using System.Web.Http;
 using System.Web.Http.Results;
+using MeetGenerator.Tests.Properties;
 
 namespace MeetGenerator.Tests.ControllerTests
 {
@@ -11,10 +12,10 @@ namespace MeetGenerator.Tests.ControllerTests
     public class PlaceControllerTest
     {
         [TestMethod]
-        public void CreateTest_ShouldReturnCreated()
+        public void Create_ShouldReturnCreated()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -25,10 +26,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithNullField_ShouldReturnBadRequest()
+        public void Create_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
             place.Address = null;
 
@@ -41,10 +42,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_ById_ShouldReturnOk()
+        public void Get_ById_ShouldReturnOk()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -56,10 +57,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_NonExistPlaceById_ShouldReturnNotFound()
+        public void Get_NonExistPlaceById_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -70,10 +71,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_ShouldReturnCreated()
+        public void Update_ShouldReturnCreated()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -88,10 +89,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_WithNullField_ShouldReturnBadRequest()
+        public void Update_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
             place.Address = null;
 
@@ -103,10 +104,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_WithNonExistId_ShouldReturnNotFound()
+        public void Update_WithNonExistId_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -117,10 +118,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_ShouldReturnOk()
+        public void Delete_ShouldReturnOk()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act
@@ -132,10 +133,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_NonExistPlace_ShouldReturnNotFound()
+        public void Delete_NonExistPlace_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController();
+            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
 
             //act

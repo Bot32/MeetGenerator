@@ -4,17 +4,20 @@ using MeetGenerator.Model.Models;
 using System.Web.Http.Results;
 using System.Web.Http;
 using MeetGenerator.API.Controllers;
+using MeetGenerator.Tests.Properties;
 
 namespace MeetGenerator.Tests.ControllerTests
 {
     [TestClass]
     public class UserControllerTest
     {
+        
+
         [TestMethod]
-        public void CreateTest_ShouldReturnCreated()
+        public void Create_ShouldReturnCreated()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -25,10 +28,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithNullField_ShouldReturnBadRequest()
+        public void Create_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
             user.FirstName = null;
 
@@ -41,10 +44,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void CreateTest_WithExistEmail_ShouldReturnBadRequest()
+        public void Create_WithExistEmail_ShouldReturnBadRequest()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user1 = TestDataHelper.GenerateUser();
             User user2 = TestDataHelper.GenerateUser();
             user2.Email = user1.Email;
@@ -58,10 +61,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_ByEmail_ShouldReturnOk()
+        public void Get_ByEmail_ShouldReturnOk()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -73,10 +76,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_ById_ShouldReturnOk()
+        public void Get_ById_ShouldReturnOk()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -88,10 +91,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void GetTest_NonExistUserByEmail_ShouldReturnNotFound()
+        public void Get_NonExistUserByEmail_ShouldReturnNotFound()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -102,10 +105,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_ShouldReturnCreated()
+        public void Update_ShouldReturnCreated()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -114,18 +117,20 @@ namespace MeetGenerator.Tests.ControllerTests
             user.LastName = "pupen";
             user.Email = "pupen@vasya.vp";
             IHttpActionResult response2 = userController.Update(user);
-            
 
+
+            Console.WriteLine(response1);
+            Console.WriteLine(response2);
             //assert
             Assert.IsTrue((response1 is CreatedNegotiatedContentResult<User>) & 
                           (response2 is CreatedNegotiatedContentResult<User>));
         }
 
         [TestMethod]
-        public void UpdateTest_WithNullField_ShouldReturnBadRequest()
+        public void Update_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
             user.Email = null;
 
@@ -137,10 +142,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void UpdateTest_WithNonExistId_ShouldReturnNotFound()
+        public void Update_WithNonExistId_ShouldReturnNotFound()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -151,10 +156,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_ShouldReturnOk()
+        public void Delete_ShouldReturnOk()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act
@@ -166,10 +171,10 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void DeleteTest_NonExistUser_ShouldReturnNotFound()
+        public void Delete_NonExistUser_ShouldReturnNotFound()
         {
             //arrange
-            var userController = new UserController();
+            var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
 
             //act

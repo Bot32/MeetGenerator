@@ -12,7 +12,7 @@ namespace MeetGenerator.Tests
     public class MeetingRepositoryTest
     {
         [TestMethod]
-        public void CreateMeetingTest()
+        public void Create_ShouldCreate()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -34,7 +34,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void InviteUserToMeetingTest()
+        public void InviteUserToMeeting_ShouldInvite()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -65,7 +65,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void DeleteMeetingTest()
+        public void Delete_ShouldDelete()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -97,7 +97,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void UpdateMeetingTest()
+        public void Update_ShouldUpdate()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
@@ -128,7 +128,7 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void GetAllMeetingsCreatedByUserTest()
+        public void GetAllMeetingsCreatedByUser_ShouldReturnMeetings()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
