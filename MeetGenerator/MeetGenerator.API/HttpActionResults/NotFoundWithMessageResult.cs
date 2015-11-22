@@ -10,11 +10,11 @@ using System.Web.Http;
 
 namespace MeetGenerator.API.HttpActionResults
 {
-    public class NotFoundWithErrorResult : IHttpActionResult
+    public class NotFoundWithMessageResult : IHttpActionResult
     {
         private string errorsList;
 
-        public NotFoundWithErrorResult(string errorsList)
+        public NotFoundWithMessageResult(string errorsList)
         {
             this.errorsList = errorsList;
         }

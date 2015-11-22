@@ -14,7 +14,7 @@ namespace MeetGenerator.DataValidators
         {
             List<string> errorsList = new List<string>();
 
-            IsUserObjectExist(user, errorsList);
+            if (!IsUserObjectExist(user, errorsList)) return errorsList;
             IsValidUserFirstName(user.FirstName, errorsList);
             IsValidUserLastName(user.LastName, errorsList);
             IsValidEmail(user.Email, errorsList);

@@ -60,7 +60,7 @@ namespace MeetGenerator.Tests.ControllerTests
 
             //assert
             Console.WriteLine(response);
-            Assert.IsTrue(response is NotFoundWithErrorResult);
+            Assert.IsTrue(response is NotFoundWithMessageResult);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace MeetGenerator.Tests.ControllerTests
 
             //assert
             Console.WriteLine(response);
-            Assert.IsTrue(response is NotFoundWithErrorResult);
+            Assert.IsTrue(response is NotFoundWithMessageResult);
         }
 
         [TestMethod]
@@ -265,7 +265,7 @@ namespace MeetGenerator.Tests.ControllerTests
 
 
             //assert
-            Assert.IsTrue(response is NotFoundWithErrorResult);
+            Assert.IsTrue(response is NotFoundWithMessageResult);
         }
 
         [TestMethod]
@@ -282,7 +282,7 @@ namespace MeetGenerator.Tests.ControllerTests
             IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
 
             //assert
-            Assert.IsTrue(response is NotFoundWithErrorResult);
+            Assert.IsTrue(response is NotFoundWithMessageResult);
         }
 
         [TestMethod]

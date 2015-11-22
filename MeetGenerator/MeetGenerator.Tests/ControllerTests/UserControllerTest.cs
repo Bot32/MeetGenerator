@@ -34,6 +34,22 @@ namespace MeetGenerator.Tests.ControllerTests
             var userController = new UserController(Resources.ConnectionString);
             User user = TestDataHelper.GenerateUser();
             user.FirstName = null;
+            user.Email = null;
+
+            //act
+            IHttpActionResult response = userController.Create(user);
+
+            //assert
+            Console.WriteLine(response);
+            Assert.IsTrue(response is BadRequestErrorMessageResult);
+        }
+
+        [TestMethod]
+        public void Create_WithNullUserObject_ShouldReturnBadRequest()
+        {
+            //arrange
+            var userController = new UserController(Resources.ConnectionString);
+            User user = null;
 
             //act
             IHttpActionResult response = userController.Create(user);

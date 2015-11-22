@@ -5,14 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using NLog;
 
 namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
 {
     class AllUsersInvitedToMeetingIdListBuilder : IBuilder<Dictionary<Guid, User>>
     {
+        Logger _logger = LogManager.GetCurrentClassLogger();
+
         public Dictionary<Guid, User> Build(SqlDataReader reader)
         {
             Dictionary<Guid, User> invitedUsersIdList = new Dictionary<Guid, User>();
+
+            _logger.Trace("Begin reading all users, invited to meeting object from SqlDataReader.");
+
             while (reader.Read())
             {
                 invitedUsersIdList.Add(
@@ -26,6 +32,10 @@ namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
                     }
                 );
             }
+
+            _logger.Trace("End receiving all users, invited to meeting from database. Received " +
+                invitedUsersIdList.Count + " invitations.");
+
             return invitedUsersIdList;
         }
     }
