@@ -56,9 +56,7 @@ namespace MeetGenerator.DataValidators
         {
             bool valid = true;
 
-            String theEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-                                   + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-                                   + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            String theEmailPattern = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
             if (email == null)
             {
@@ -67,13 +65,11 @@ namespace MeetGenerator.DataValidators
                 return valid;
             }
 
-            //валидатор не пропустил secondUser411@test.com, нужно найти новый
-
-            //if (!Regex.IsMatch(email, theEmailPattern))
-            //{
-            //    valid = false;
-            //    errorsList.AppendLine("Email " + email + " is invalid.");
-            //} 
+            if (!Regex.IsMatch(email, theEmailPattern))
+            {
+                valid = false;
+                errorsList.Add("Email " + email + " is invalid.");
+            }
 
             return valid;
         }

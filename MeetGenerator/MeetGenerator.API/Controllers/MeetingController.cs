@@ -36,6 +36,14 @@ namespace MeetGenerator.API.Controllers
             _placeRepository = new PlaceRepository(connectionString);
         }
 
+        public MeetingController(IMeetingRepository meetingRepository, 
+            IUserRepository userReository, IPlaceRepository placeRepository)
+        {
+            _meetRepository = meetingRepository;
+            _userRepository = userReository;
+            _placeRepository = placeRepository;
+        }
+
         // POST: api/User/Create
         [HttpPost]
         public IHttpActionResult Create(Meeting meeting)

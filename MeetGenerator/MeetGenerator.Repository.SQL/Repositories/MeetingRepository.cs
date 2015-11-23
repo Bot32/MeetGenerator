@@ -92,6 +92,8 @@ namespace MeetGenerator.Repository.SQL.Repositories
         {
             List<Meeting> allMeetingsCreatedByUser = new List<Meeting>();
 
+            Log("Begin receiving all Meetings, created by User, from database. User ID = " + userId);
+
             allMeetingsCreatedByUser = DatabaseConnector.GetDataFromDatabase<List<Meeting>>
                 (sqlConnection, CommandList.Build_GetAllMeetingsIdCreatedByUserCommand(userId), new AllMeetingsIdCreatedByUser());
 
@@ -100,6 +102,9 @@ namespace MeetGenerator.Repository.SQL.Repositories
                 Meeting meeting = allMeetingsCreatedByUser[i];
                 meeting = GetMeeting(meeting.Id);
             }
+
+            Log("End receiving all Meetings, created by User, from database. " + 
+                allMeetingsCreatedByUser.Count + "Meetings received.");
 
             return allMeetingsCreatedByUser;
         }

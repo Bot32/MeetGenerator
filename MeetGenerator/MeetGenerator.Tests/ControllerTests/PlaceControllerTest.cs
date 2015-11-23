@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MeetGenerator.API.Controllers;
-using MeetGenerator.Model.Models;
-using System.Web.Http;
 using System.Web.Http.Results;
-using MeetGenerator.Tests.Properties;
+using System.Web.Http;
+using MeetGenerator.Model.Models;
+using MeetGenerator.API.Controllers;
 
 namespace MeetGenerator.Tests.ControllerTests
 {
@@ -15,8 +14,8 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Create_ShouldReturnCreated()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
             IHttpActionResult response = placeController.Create(place);
@@ -29,15 +28,14 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Create_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
             place.Address = null;
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
             IHttpActionResult response = placeController.Create(place);
 
             //assert
-            Console.WriteLine(response);
             Assert.IsTrue(response is BadRequestErrorMessageResult);
         }
 
@@ -45,11 +43,10 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Get_ById_ShouldReturnOk()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
-            placeController.Create(place);
             IHttpActionResult response = placeController.Get(place.Id);
 
             //assert
@@ -60,8 +57,8 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Get_NonExistPlaceById_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(null));
 
             //act
             IHttpActionResult response = placeController.Get(place.Id);
@@ -74,27 +71,23 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Update_ShouldReturnCreated()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
-            IHttpActionResult response1 = placeController.Create(place);
-            place.Address = "vasiliy_home";
-            place.Description = "3331";
-            IHttpActionResult response2 = placeController.Update(place);
+            IHttpActionResult response = placeController.Update(place);
 
             //assert
-            Assert.IsTrue((response1 is CreatedNegotiatedContentResult<Place>) &
-                          (response2 is CreatedNegotiatedContentResult<Place>));
+            Assert.IsTrue(response is CreatedNegotiatedContentResult<Place>);
         }
 
         [TestMethod]
         public void Update_WithNullField_ShouldReturnBadRequest()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
             place.Address = null;
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
             IHttpActionResult response = placeController.Update(place);
@@ -107,8 +100,8 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Update_WithNonExistId_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(null));
 
             //act
             IHttpActionResult response = placeController.Update(place);
@@ -121,8 +114,8 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Delete_ShouldReturnOk()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(place));
 
             //act
             placeController.Create(place);
@@ -136,8 +129,8 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Delete_NonExistPlace_ShouldReturnNotFound()
         {
             //arrange
-            var placeController = new PlaceController(Resources.ConnectionString);
             Place place = TestDataHelper.GeneratePlace();
+            var placeController = new PlaceController(TestDataHelper.GetIPlaceRepositoryMock(null));
 
             //act
             IHttpActionResult response = placeController.Delete(place.Id);
@@ -145,12 +138,6 @@ namespace MeetGenerator.Tests.ControllerTests
             //assert
             Console.WriteLine(response);
             Assert.IsTrue(response is NotFoundResult);
-        }
-
-        [TestCleanup()]
-        public void MyTestCleanup()
-        {
-            TestDataHelper.ClearDB();
         }
     }
 }

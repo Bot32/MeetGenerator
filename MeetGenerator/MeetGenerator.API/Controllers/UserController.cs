@@ -31,6 +31,11 @@ namespace MeetGenerator.API.Controllers
             _userRepository = new UserRepository(connectionString);
         }
 
+        public UserController(IUserRepository repository)
+        {
+            _userRepository = repository;
+        }
+
         // POST: api/User/Create
         [HttpPost]
         public IHttpActionResult Create(User user)

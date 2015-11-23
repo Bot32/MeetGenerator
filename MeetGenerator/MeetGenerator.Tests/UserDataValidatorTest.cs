@@ -65,13 +65,18 @@ namespace MeetGenerator.Tests
             emails.Add("joe@his.home.com");
             emails.Add("a@abc.org");
             emails.Add("a@abc-xyz.org");
+            emails.Add("secondUser411@test.com");
 
             //act
             foreach (String email in emails)
             {
-                result = UserDataValidator.IsValidEmail(email, ErrorList);
+                result = result & UserDataValidator.IsValidEmail(email, ErrorList);
             }
-            Console.WriteLine(ErrorList);
+
+            foreach (String email in ErrorList)
+            {
+                Console.WriteLine(email);
+            }
 
             //asserts
             Assert.IsTrue(result);
@@ -103,9 +108,14 @@ namespace MeetGenerator.Tests
             //act
             foreach (String email in emails)
             {
-                result = UserDataValidator.IsValidEmail(email, ErrorList);
+                result = result & UserDataValidator.IsValidEmail(email, ErrorList);
             }
             Console.WriteLine(ErrorList);
+
+            foreach (String email in ErrorList)
+            {
+                Console.WriteLine(email);
+            }
 
             //asserts
             //Assert.IsFalse(result);
@@ -126,7 +136,6 @@ namespace MeetGenerator.Tests
 
             //act
             result = UserDataValidator.IsCompleteValidUserObject(user);
-            Console.WriteLine(result);
 
             //assert
             Assert.IsTrue(result.Count == 0);
@@ -147,7 +156,6 @@ namespace MeetGenerator.Tests
 
             //act
             result = UserDataValidator.IsCompleteValidUserObject(user);
-            Console.WriteLine(result);
 
             //assert
             Assert.IsFalse(result.Count == 0);

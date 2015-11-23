@@ -29,6 +29,11 @@ namespace MeetGenerator.API.Controllers
             _placeRepository = new PlaceRepository(connectionString);
         }
 
+        public PlaceController(IPlaceRepository rep)
+        {
+            _placeRepository = rep;
+        }
+
         // POST: api/User/Create
         [HttpPost]
         public IHttpActionResult Create(Place place)
