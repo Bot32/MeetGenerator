@@ -97,6 +97,7 @@
     <Compile Include="Controllers\PlaceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="DataValidators\MeetDataValidator.cs" />
     <Compile Include="DataValidators\UserDataValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

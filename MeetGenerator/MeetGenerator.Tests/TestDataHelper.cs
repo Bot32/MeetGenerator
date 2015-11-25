@@ -73,12 +73,9 @@ namespace MeetGenerator.Tests
         static public IUserRepository GetIUserRepositoryMock(User getUserResult)
         {
             var mock = new Mock<IUserRepository>();
-            User user = TestDataHelper.GenerateUser();
-            mock.Setup(userRepository => userRepository.CreateUser(user));
+
             mock.Setup(userRepository => userRepository.GetUser(It.IsAny<Guid>())).Returns(getUserResult);
             mock.Setup(userRepository => userRepository.GetUser(It.IsAny<string>())).Returns(getUserResult);
-            mock.Setup(userRepository => userRepository.UpdateUser(user));
-            mock.Setup(userRepository => userRepository.DeleteUser(user.Id));
 
             return mock.Object;
         }
@@ -86,11 +83,8 @@ namespace MeetGenerator.Tests
         static public IPlaceRepository GetIPlaceRepositoryMock(Place getPlaceResult)
         {
             var mock = new Mock<IPlaceRepository>();
-            Place place = TestDataHelper.GeneratePlace();
-            mock.Setup(placeRepository => placeRepository.CreatePlace(place));
-            mock.Setup(placeRepository => placeRepository.GetPlace(It.IsAny<Guid>())).Returns(getPlaceResult);
-            mock.Setup(placeRepository => placeRepository.UpdatePlaceInfo(place));
-            mock.Setup(placeRepository => placeRepository.DeletePlace(place.Id));
+
+            mock.Setup(i => i.GetPlace(It.IsAny<Guid>())).Returns(getPlaceResult);
 
             return mock.Object;
         }
@@ -98,11 +92,8 @@ namespace MeetGenerator.Tests
         static public IMeetingRepository GetIMeetingRepositoryMock(Meeting getMeetingResult)
         {
             var mock = new Mock<IMeetingRepository>();
-            Meeting meeting = TestDataHelper.GenerateMeeting();
-            mock.Setup(meetingRepository => meetingRepository.CreateMeeting(meeting));
+
             mock.Setup(meetingRepository => meetingRepository.GetMeeting(It.IsAny<Guid>())).Returns(getMeetingResult);
-            mock.Setup(meetingRepository => meetingRepository.UpdateMeetingInfo(meeting));
-            mock.Setup(meetingRepository => meetingRepository.DeleteMeeting(meeting));
             mock.Setup(meetingRepository => meetingRepository.InviteUserToMeeting(It.IsAny<Guid>(), It.IsAny<Guid>()));
 
             return mock.Object;

@@ -24,7 +24,7 @@ namespace MeetGenerator.Tests
             bool result;
 
             //act
-            result = UserDataValidator.IsValidUserFirstName(firstName, ErrorList);
+            result = UserDataValidator.IsValidFirstName(firstName, ErrorList);
             Console.WriteLine(ErrorList);
 
             //assert
@@ -40,7 +40,7 @@ namespace MeetGenerator.Tests
             bool result;
 
             //act
-            result = UserDataValidator.IsValidUserFirstName(firstName, ErrorList);
+            result = UserDataValidator.IsValidFirstName(firstName, ErrorList);
             Console.WriteLine(ErrorList);
 
             //assert

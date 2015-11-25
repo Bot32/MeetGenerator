@@ -1,4 +1,5 @@
-﻿using MeetGenerator.API.HttpActionResults;
+﻿using MeetGenerator.API.DataValidators;
+using MeetGenerator.API.HttpActionResults;
 using MeetGenerator.Model.Models;
 using MeetGenerator.Model.Repositories;
 using MeetGenerator.Repository.SQL.Repositories;
@@ -52,7 +53,9 @@ namespace MeetGenerator.API.Controllers
 
             Log("Received create meeting POST HTTP-request.", meeting, requestId);
 
-            if ((meeting.Owner == null) | (meeting.Place == null))
+            List<string> errorList = MeetDataValidator.IsCompleteValidMeetingObject(meeting);
+
+            if (errorList.Count != 0)
             {
                 Log("Send ErrorMessageResult(400) response to create meeting POST HTTP-request. " +
                     "Message: Invalid model state.", requestId);
@@ -152,7 +155,9 @@ namespace MeetGenerator.API.Controllers
 
             Log("Received update meeting PUT HTTP-request.", meeting, requestId);
 
-            if ((meeting.Owner == null) | (meeting.Place == null))
+            List<string> errorList = MeetDataValidator.IsCompleteValidMeetingObject(meeting);
+
+            if (errorList.Count != 0)
             {
                 Log("Send ErrorMessageResult(400) response to update meeting PUT HTTP-request. " +
                     "Message: Invalid model state.", requestId);

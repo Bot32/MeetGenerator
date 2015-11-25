@@ -18,6 +18,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
+            meet.Date = new DateTime(3000, 12, 31);
             var meetController = new MeetingController(
                 TestDataHelper.GetIMeetingRepositoryMock(meet), 
                 TestDataHelper.GetIUserRepositoryMock(meet.Owner), 
@@ -53,6 +54,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
+            meet.Date = new DateTime(3000, 12, 31);
             var meetController = new MeetingController(
                 TestDataHelper.GetIMeetingRepositoryMock(meet),
                 TestDataHelper.GetIUserRepositoryMock(null),
@@ -71,6 +73,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
+            meet.Date = new DateTime(3000, 12, 31);
             var meetController = new MeetingController(
                 TestDataHelper.GetIMeetingRepositoryMock(meet),
                 TestDataHelper.GetIUserRepositoryMock(meet.Owner),
@@ -122,6 +125,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
+            meet.Date = new DateTime(3000, 12, 31);
             var meetController = new MeetingController(
                 TestDataHelper.GetIMeetingRepositoryMock(meet),
                 TestDataHelper.GetIUserRepositoryMock(meet.Owner),
@@ -157,6 +161,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
+            meet.Date = new DateTime(3000, 12, 31);
             var meetController = new MeetingController(
                 TestDataHelper.GetIMeetingRepositoryMock(null),
                 TestDataHelper.GetIUserRepositoryMock(meet.Owner),

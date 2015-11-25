@@ -15,8 +15,8 @@ namespace MeetGenerator.DataValidators
             List<string> errorsList = new List<string>();
 
             if (!IsUserObjectExist(user, errorsList)) return errorsList;
-            IsValidUserFirstName(user.FirstName, errorsList);
-            IsValidUserLastName(user.LastName, errorsList);
+            IsValidFirstName(user.FirstName, errorsList);
+            IsValidLastName(user.LastName, errorsList);
             IsValidEmail(user.Email, errorsList);
 
             return errorsList;
@@ -32,7 +32,7 @@ namespace MeetGenerator.DataValidators
             return true;
         }
 
-        public static bool IsValidUserFirstName(String userFirstName, List<string> errorsList)
+        public static bool IsValidFirstName(String userFirstName, List<string> errorsList)
         {
             if (userFirstName == null)
             {
@@ -42,7 +42,7 @@ namespace MeetGenerator.DataValidators
             return true;
         }
 
-        public static bool IsValidUserLastName(String userLastName, List<string> errorsList)
+        public static bool IsValidLastName(String userLastName, List<string> errorsList)
         {
             if (userLastName == null)
             {
