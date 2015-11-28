@@ -13,7 +13,7 @@ using MeetGenerator.API.Controllers;
 
 namespace MeetGenerator.Tests
 {
-    static class TestDataHelper
+    static public class TestDataHelper
     {
         static int index = 1;
         static int Index

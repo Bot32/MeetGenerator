@@ -99,8 +99,7 @@ namespace MeetGenerator.Repository.SQL.Repositories
 
             for (int i = 0; i < allMeetingsCreatedByUser.Count; i++)
             {
-                Meeting meeting = allMeetingsCreatedByUser[i];
-                meeting = GetMeeting(meeting.Id);
+                allMeetingsCreatedByUser[i] = GetMeeting(allMeetingsCreatedByUser[i].Id);
             }
 
             Log("End receiving all Meetings, created by User, from database. " + 

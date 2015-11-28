@@ -45,7 +45,7 @@ namespace MeetGenerator.API.Controllers
             _placeRepository = placeRepository;
         }
 
-        // POST: api/User/Create
+        // POST: api/Meeting/Create
         [HttpPost]
         public IHttpActionResult Create(Meeting meeting)
         {
@@ -85,7 +85,7 @@ namespace MeetGenerator.API.Controllers
             return Created("", meeting);
         }
 
-        // POST: api/User/Create
+        // POST: api/Meeting/Create
         [HttpPost]
         public IHttpActionResult InviteUserToMeeting(Guid userId, Guid meetingId)
         {
@@ -125,7 +125,7 @@ namespace MeetGenerator.API.Controllers
             return Ok();
         }
 
-        // GET: api/User/Get
+        // GET: api/Meeting/Get
         [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
@@ -147,7 +147,7 @@ namespace MeetGenerator.API.Controllers
             return Ok(meeting);
         }
 
-        // PUT: api/User/Update
+        // PUT: api/Meeting/Update
         [HttpPut]
         public IHttpActionResult Update(Meeting meeting)
         {
@@ -178,7 +178,7 @@ namespace MeetGenerator.API.Controllers
             return Created("", meeting);
         }
 
-        // DELETE: api/User/Delete
+        // DELETE: api/Meeting/Delete
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {
