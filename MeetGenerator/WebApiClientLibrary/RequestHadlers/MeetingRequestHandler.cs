@@ -30,10 +30,6 @@ namespace WebApiClientLibrary.RequestHadlers
 
                 response = await client.PostAsJsonAsync("api/Place/Create", meeting.Place);
 
-                if (!response.IsSuccessStatusCode)  return response;
-
-                meeting.Place = await response.Content.ReadAsAsync<Place>();
-
                 return await client.PostAsJsonAsync("api/Meeting/Create", meeting);
             }
         }
@@ -77,16 +73,11 @@ namespace WebApiClientLibrary.RequestHadlers
 
         public async Task<HttpResponseMessage> Update(Meeting meeting)
         {
-            HttpResponseMessage response;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                response = await client.PutAsJsonAsync("api/Place/Update", meeting.Place);
-
-                if (!response.IsSuccessStatusCode) return response;
 
                 return await client.PutAsJsonAsync("api/Meeting/Update", meeting);
             }

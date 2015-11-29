@@ -90,7 +90,7 @@ namespace MeetGenerator.Tests.ControllerTests
             var userController = new UserController(TestDataHelper.GetIUserRepositoryMock(user));
 
             //act
-            IHttpActionResult response = userController.Get(user.Id);
+            IHttpActionResult response = userController.Get(user.Id.ToString());
 
             //assert
             Assert.IsTrue(response is OkNegotiatedContentResult<User>);

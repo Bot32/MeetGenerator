@@ -72,43 +72,26 @@ namespace MeetGenerator.API.Controllers
 
         // GET: api/User/Get
         [HttpGet]
-        public IHttpActionResult Get(Guid id)
+        public IHttpActionResult Get(String userIdentificator)
         {
             Guid requestId = Guid.NewGuid();
+            Guid userId;
+            User user;
 
-            Log("Received get user by ID GET HTTP-request. Attached user ID = " + id, requestId);
+            Log("Received get user GET HTTP-request. Attached user identificator = " + userIdentificator, requestId);
 
-            User user = _userRepository.GetUser(id);
+            if (Guid.TryParse(userIdentificator, out userId))
+                user = _userRepository.GetUser(userId);
+            else
+                user = _userRepository.GetUser(userIdentificator);
 
             if (user == null)
             {
-                Log("Send NotFoundResult(404) response to get user by ID GET HTTP-request.", requestId);
-                return NotFound();
-            }
-                
-            Log("Send OkNegotiatedContentResult<User>(200) response to get user by ID GET HTTP-request.", 
-                user, requestId);
-
-            return Ok(user);
-        }
-
-        // GET: api/User/Get
-        [HttpGet]
-        public IHttpActionResult Get(String email)
-        {
-            Guid requestId = Guid.NewGuid();
-
-            Log("Received get user by ID email GET HTTP-request. Attached user email = " + email, requestId);
-
-            User user = _userRepository.GetUser(email);
-
-            if (user == null)
-            {
-                Log("Send NotFoundResult(404) response to get user by email GET HTTP-request.", requestId);
+                Log("Send NotFoundResult(404) response to get user GET HTTP-request.", requestId);
                 return NotFound();
             }
 
-            Log("Send OkNegotiatedContentResult<User>(200) response to get user by email GET HTTP-request.", 
+            Log("Send OkNegotiatedContentResult<User>(200) response to get user GET HTTP-request.",
                 user, requestId);
 
             return Ok(user);

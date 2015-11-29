@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IMeetingRequestHandler.cs" />
+    <Compile Include="Interfaces\IPlaceRequestHandler.cs" />
     <Compile Include="Interfaces\IUserRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -58,8 +59,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RequestHadlers\MeetingRequestHandler.cs" />
+    <Compile Include="RequestHadlers\PlaceRequestHandler.cs" />
     <Compile Include="RequestHadlers\UserRequestHandler.cs" />
     <Compile Include="Tests\MeetingRequestHandlerTest.cs" />
+    <Compile Include="Tests\PlaceRequestHandlerTest.cs" />
     <Compile Include="Tests\UserRequestHandlerTest.cs" />
   </ItemGroup>
   <ItemGroup>

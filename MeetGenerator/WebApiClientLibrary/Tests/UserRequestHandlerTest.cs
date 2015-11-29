@@ -42,6 +42,7 @@ namespace WebApiClientLibrary.Tests
             HttpResponseMessage response = await userHandler.Get(user.Email);
 
             //assert
+            Console.WriteLine(response.StatusCode);
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
 
