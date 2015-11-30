@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 
 namespace WebApiClientLibrary.RequestHadlers
 {
-    class PlaceRequestHandler : IPlaceRequestHandler
+    public class PlaceRequestHandler : IPlaceRequestHandler
     {
         string baseAddress;
 

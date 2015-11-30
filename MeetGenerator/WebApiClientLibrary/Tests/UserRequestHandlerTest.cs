@@ -9,6 +9,7 @@ using MeetGenerator.Model.Models;
 using System.Net.Http;
 using MeetGenerator.Tests;
 
+
 namespace WebApiClientLibrary.Tests
 {
     [TestClass]
@@ -59,7 +60,7 @@ namespace WebApiClientLibrary.Tests
             HttpResponseMessage response = await userHandler.Get(user.Email);
             User resultUser = await response.Content.ReadAsAsync<User>();
 
-            HttpResponseMessage resultResponse = await userHandler.Get(resultUser.Id);
+            HttpResponseMessage resultResponse = await userHandler.Get(resultUser.Id.ToString());
 
             //assert
             Assert.IsTrue(resultResponse.IsSuccessStatusCode);

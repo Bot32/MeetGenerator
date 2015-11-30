@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 
 namespace WebApiClientLibrary.RequestHadlers
 {
-    class MeetingRequestHandler : IMeetingRequestHandler
+    public class MeetingRequestHandler : IMeetingRequestHandler
     {
         string baseAddress;
 
@@ -21,14 +21,11 @@ namespace WebApiClientLibrary.RequestHadlers
 
         public async Task<HttpResponseMessage> Create(Meeting meeting)
         {
-            HttpResponseMessage response;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseAddress);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                response = await client.PostAsJsonAsync("api/Place/Create", meeting.Place);
 
                 return await client.PostAsJsonAsync("api/Meeting/Create", meeting);
             }

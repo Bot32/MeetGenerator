@@ -42,7 +42,7 @@ namespace WebApiClientLibrary.Tests
             Meeting resultMeet = await resultResponse.Content.ReadAsAsync<Meeting>();
 
             //assert
-            TestDataHelper.PrintMeetingInfo(meeting);
+            TestDataHelper.PrintMeetingInfo(resultMeet);
             Assert.IsTrue(resultResponse.IsSuccessStatusCode);
         }
 

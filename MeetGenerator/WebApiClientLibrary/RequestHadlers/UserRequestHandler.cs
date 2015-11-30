@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 
 namespace WebApiClientLibrary.RequestHadlers
 {
-    class UserRequestHandler : IUserRequestHandler
+    public class UserRequestHandler : IUserRequestHandler
     {
         string baseAddress;
 
@@ -30,15 +30,7 @@ namespace WebApiClientLibrary.RequestHadlers
             }
         }
 
-        public async Task<HttpResponseMessage> Get(Guid id)
-        {
-            return await GetUser(id.ToString());
-        }
-        public async Task<HttpResponseMessage> Get(string email)
-        {
-            return await GetUser(email);
-        }
-        async Task<HttpResponseMessage> GetUser(string userIdentificator)
+        public async Task<HttpResponseMessage> Get(string userIdentificator)
         {
             using (var client = new HttpClient())
             {
