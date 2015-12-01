@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Invitation.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\User.cs" />

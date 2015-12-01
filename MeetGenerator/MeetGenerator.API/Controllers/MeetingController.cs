@@ -87,15 +87,15 @@ namespace MeetGenerator.API.Controllers
 
         // POST: api/Meeting/Create
         [HttpPost]
-        public IHttpActionResult InviteUserToMeeting(Guid userId, Guid meetingId)
+        public IHttpActionResult InviteUserToMeeting(Invitation invitation)
         {
             Guid requestId = Guid.NewGuid();
 
             Log("Received invite user to meeting POST HTTP-request. Meeting ID = " +
-                meetingId + ". User ID = " + userId, requestId);
+                invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
 
-            User user = _userRepository.GetUser(userId);
-            Meeting meeting = _meetRepository.GetMeeting(meetingId);
+            User user = _userRepository.GetUser(invitation.UserID);
+            Meeting meeting = _meetRepository.GetMeeting(invitation.MeetingID);
 
             if (user == null)
             {
@@ -111,14 +111,14 @@ namespace MeetGenerator.API.Controllers
                 return new NotFoundWithMessageResult("Meeting not found.");
             }
 
-            if (meeting.InvitedPeople.ContainsKey(userId))
+            if (meeting.InvitedPeople.ContainsKey(invitation.UserID))
             {
                 Log("Send ErrorMessageResult(400) response to invite user to meeting POST HTTP-request. " +
                     "Message: User already invited.", requestId);
                 return BadRequest("User already invited.");
             }
 
-            _meetRepository.InviteUserToMeeting(userId, meetingId);
+            _meetRepository.InviteUserToMeeting(invitation.UserID, invitation.MeetingID);
 
             Log("Send OkResult(200) response to invite user to meeting POST HTTP-request.", requestId);
 

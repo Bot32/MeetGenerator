@@ -19,10 +19,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Date = new DateTime(3000, 12, 31);
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet), 
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner), 
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Create(meet);
@@ -37,10 +34,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Owner = null;
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Create(meet);
@@ -55,10 +49,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Date = new DateTime(3000, 12, 31);
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(null),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, null, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Create(meet);
@@ -74,10 +65,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Date = new DateTime(3000, 12, 31);
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(null));
+            var meetController = GetMeetingControlller(meet, meet.Owner, null);
 
             //act
             IHttpActionResult response = meetController.Create(meet);
@@ -90,10 +78,7 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Get_ById_ShouldReturnOk()
         {
             Meeting meet = TestDataHelper.GenerateMeeting();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Get(meet.Id);
@@ -107,10 +92,7 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Get_NonExistMeetingById_ShouldReturnNotFound()
         {
             Meeting meet = TestDataHelper.GenerateMeeting();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(null),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Get(meet.Id);
@@ -126,10 +108,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Date = new DateTime(3000, 12, 31);
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Update(meet);
@@ -144,10 +123,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Owner = null;
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Update(meet);
@@ -162,10 +138,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             meet.Date = new DateTime(3000, 12, 31);
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(null),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Update(meet);
@@ -179,10 +152,7 @@ namespace MeetGenerator.Tests.ControllerTests
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Delete(meet.Id);
@@ -195,10 +165,7 @@ namespace MeetGenerator.Tests.ControllerTests
         public void Delete_NonExistMeeting_ShouldReturnNotFound()
         {
             Meeting meet = TestDataHelper.GenerateMeeting();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(null),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
 
             //act
             IHttpActionResult response = meetController.Delete(meet.Id);
@@ -213,13 +180,15 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
+            IHttpActionResult response = meetController.InviteUserToMeeting(
+                new Invitation
+                {
+                    MeetingID = meet.Id,
+                    UserID = user.Id
+                });
 
             //assert
             Assert.IsTrue(response is OkResult);
@@ -231,13 +200,15 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(null),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, null, meet.Place);
 
             //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
+            IHttpActionResult response = meetController.InviteUserToMeeting(
+                new Invitation
+                {
+                    MeetingID = meet.Id,
+                    UserID = user.Id
+                });
 
             //assert
             Assert.IsTrue(response is NotFoundWithMessageResult);
@@ -250,13 +221,15 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(null),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
 
             //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
+            IHttpActionResult response = meetController.InviteUserToMeeting(
+                new Invitation
+                {
+                    MeetingID = meet.Id,
+                    UserID = user.Id
+                });
 
             //assert
             Assert.IsTrue(response is NotFoundWithMessageResult);
@@ -268,17 +241,27 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var meetController = new MeetingController(
-                TestDataHelper.GetIMeetingRepositoryMock(meet),
-                TestDataHelper.GetIUserRepositoryMock(meet.Owner),
-                TestDataHelper.GetIPlaceRepositoryMock(meet.Place));
+            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
             //act
             meet.InvitedPeople.Add(user.Id, user);
-            IHttpActionResult response = meetController.InviteUserToMeeting(user.Id, meet.Id);
+            IHttpActionResult response = meetController.InviteUserToMeeting(
+                new Invitation
+                {
+                    MeetingID = meet.Id,
+                    UserID = user.Id
+                });
 
             //assert
             Assert.IsTrue(response is BadRequestErrorMessageResult);
+        }
+
+        MeetingController GetMeetingControlller(Meeting getMeetingResult, User getUserResult, Place getPlaceResult)
+        {
+            return new MeetingController(
+                TestDataHelper.GetIMeetingRepositoryMock(getMeetingResult),
+                TestDataHelper.GetIUserRepositoryMock(getUserResult),
+                TestDataHelper.GetIPlaceRepositoryMock(getPlaceResult));
         }
     }
 }
