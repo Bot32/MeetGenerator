@@ -90,6 +90,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RepositoryTests\InvitationRepositoryTest.cs" />
     <Compile Include="TestDataHelper.cs" />
     <Compile Include="UserDataValidatorTest.cs" />
     <Compile Include="RepositoryTests\UserRepositoryTest.cs" />

@@ -17,6 +17,7 @@ namespace MeetGenerator.API.Controllers
     {
         IMeetingRepository _meetRepository;
         IUserRepository _userRepository;
+        IInvitationRepository _invitationRepository;
 
         Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -31,12 +32,15 @@ namespace MeetGenerator.API.Controllers
         {
             _meetRepository = new MeetingRepository(connectionString);
             _userRepository = new UserRepository(connectionString);
+            _invitationRepository = new InvitationRepository(connectionString);    
         }
 
-        public InvitationController(IMeetingRepository meetingRepository, IUserRepository userReository)
+        public InvitationController(IMeetingRepository meetingRepository, IUserRepository userReository,
+            IInvitationRepository invitationRepository)
         {
             _meetRepository = meetingRepository;
             _userRepository = userReository;
+            _invitationRepository = invitationRepository;
         }
 
         [HttpPost]
@@ -71,7 +75,7 @@ namespace MeetGenerator.API.Controllers
                 return BadRequest("User already invited.");
             }
 
-            _meetRepository.CreateInvitation(invitation.UserID, invitation.MeetingID);
+            _invitationRepository.Create(invitation);
 
             Log("Send OkResult(200) response to create invitation user to meeting POST HTTP-request.", requestId);
 
@@ -79,30 +83,20 @@ namespace MeetGenerator.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get (Invitation invitation)
+        public IHttpActionResult Get(Invitation invitation)
         {
             Guid requestId = Guid.NewGuid();
 
             Log("Received get invitation GET HTTP-request. Meeting ID = " +
                 invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
 
-            User user = _userRepository.GetUser(invitation.UserID);
-            Meeting meeting = _meetRepository.GetMeeting(invitation.MeetingID);
-
-            if (meeting == null)
-            {
-                Log("Send NotFoundWithMessageResult(404) response to get invitation GET HTTP-request." +
-                    "Message: Meeting not found.", requestId);
-                return new NotFoundWithMessageResult("Meeting not found.");
-            }
-
-            if (meeting.InvitedPeople.ContainsKey(invitation.UserID))
+            if (_invitationRepository.IsExist(invitation))
             {
                 Log("Send OkREsult(200) response to get invitation GET HTTP-request.", requestId);
                 return Ok();
             }
 
-            Log("Send NotFound(200) response to invite user to meeting GET HTTP-request.", requestId);
+            Log("Send NotFound(200) response to get invitation user to meeting GET HTTP-request.", requestId);
             return NotFound();
         }
 
@@ -114,19 +108,9 @@ namespace MeetGenerator.API.Controllers
             Log("Received delete invitation DELETE HTTP-request. Meeting ID = " +
                 invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
 
-            User user = _userRepository.GetUser(invitation.UserID);
-            Meeting meeting = _meetRepository.GetMeeting(invitation.MeetingID);
-
-            if (meeting == null)
+            if (_invitationRepository.IsExist(invitation))
             {
-                Log("Send NotFoundWithMessageResult(404) response to delete invitation DELETE HTTP-request." +
-                    "Message: Meeting not found.", requestId);
-                return new NotFoundWithMessageResult("Meeting not found.");
-            }
-
-            if (meeting.InvitedPeople.ContainsKey(invitation.UserID))
-            {
-                _meetRepository.DeleteInvitation(invitation.UserID, invitation.MeetingID);
+                _invitationRepository.Delete(invitation);
                 Log("Send OkREsult(200) response to delete invitation DELETE HTTP-request.", requestId);
                 return Ok();
             }
@@ -141,19 +125,17 @@ namespace MeetGenerator.API.Controllers
             _logger.Info("{1} {0}", logMessage, requestId);
         }
 
-        void Log(String logMessage, Meeting meeting, Guid requestId)
+        void Log(String logMessage, Invitation invitation, Guid requestId)
         {
-            if (meeting != null)
+            if (invitation != null)
             {
-                _logger.Info("{5} {0} Attached meeting object: " +
-                    "ID = {1}, Title = {2}, Owner.ID = {3}, Place.ID = {4}.",
-                    logMessage, meeting.Id, meeting.Title,
-                    ((meeting.Owner == null) ? "null" : meeting.Owner.Id.ToString()),
-                    meeting.Place.Id, requestId);
+                _logger.Info("{3} {0} Attached invitation object: " +
+                    "MeetingID = {1}, UserID = {2}.",
+                    logMessage, invitation.MeetingID, invitation.UserID, requestId);
             }
             else
             {
-                _logger.Info("{1} Received {0} request. Attached meeting object is null.",
+                _logger.Info("{1} Received {0} request. Attached invitation object is null.",
                     logMessage, requestId);
             }
         }

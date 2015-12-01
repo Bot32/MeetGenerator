@@ -94,7 +94,15 @@ namespace MeetGenerator.Tests
             var mock = new Mock<IMeetingRepository>();
 
             mock.Setup(meetingRepository => meetingRepository.GetMeeting(It.IsAny<Guid>())).Returns(getMeetingResult);
-            mock.Setup(meetingRepository => meetingRepository.CreateInvitation(It.IsAny<Guid>(), It.IsAny<Guid>()));
+
+            return mock.Object;
+        }
+
+        static public IInvitationRepository GetIInvitationRepositoryMock(bool IsExistInvitationResult)
+        {
+            var mock = new Mock<IInvitationRepository>();
+
+            mock.Setup(invitationRepository => invitationRepository.IsExist(It.IsAny<Invitation>())).Returns(IsExistInvitationResult);
 
             return mock.Object;
         }

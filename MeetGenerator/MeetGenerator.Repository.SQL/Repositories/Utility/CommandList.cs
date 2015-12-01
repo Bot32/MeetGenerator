@@ -144,30 +144,45 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
             return command;
         }
 
-        public static SqlCommand Build_InviteUserToMeetingCommand(Guid userId, Guid meetingId)
+        public static SqlCommand Build_InviteUserToMeetingCommand(Invitation invitation)
         {
             SqlCommand command = new SqlCommand();
 
             Log("invite user to meeting");
 
             command.CommandText = "insert into [dbo].[Invitations] (MeetingID, UserID) values (@MeetingID, @UserID)";
-            command.Parameters.AddWithValue("@MeetingID", meetingId);
-            command.Parameters.AddWithValue("@UserID", userId);
+            command.Parameters.AddWithValue("@MeetingID", invitation.MeetingID);
+            command.Parameters.AddWithValue("@UserID", invitation.UserID);
 
             Log("invite user to meeting", command);
 
             return command;
         }
 
-        public static SqlCommand Build_DeleteInvitationUserToMeetingCommand(Guid userId, Guid meetingId)
+        public static SqlCommand Build_GetInvitationUserToMeetingCommand(Invitation invitation)
+        {
+            SqlCommand command = new SqlCommand();
+
+            Log("get invitation user to meeting");
+
+            command.CommandText = "Select MeetingID, UserID from [dbo].[Invitations] where MeetingID = @MeetingID and UserID = @UserID";
+            command.Parameters.AddWithValue("@MeetingID", invitation.MeetingID);
+            command.Parameters.AddWithValue("@UserID", invitation.UserID);
+
+            Log("get invitation user to meeting", command);
+
+            return command;
+        }
+
+        public static SqlCommand Build_DeleteInvitationUserToMeetingCommand(Invitation invitation)
         {
             SqlCommand command = new SqlCommand();
 
             Log("delete invitation user to meeting");
 
             command.CommandText = "delete from [dbo].[Invitations] where MeetingID = @MeetingID and UserID = @UserID";
-            command.Parameters.AddWithValue("@MeetingID", meetingId);
-            command.Parameters.AddWithValue("@UserID", userId);
+            command.Parameters.AddWithValue("@MeetingID", invitation.MeetingID);
+            command.Parameters.AddWithValue("@UserID", invitation.UserID);
 
             Log("delete invitation user to meeting", command);
 

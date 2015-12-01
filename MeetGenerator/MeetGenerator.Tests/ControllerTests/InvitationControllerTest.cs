@@ -19,7 +19,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
             IHttpActionResult response = invitationController.Create(CreateInvitation(meet, user));
@@ -34,7 +34,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(meet, null);
+            var invitationController = GetInvitationControlller(meet, null, true);
 
             //act
             IHttpActionResult response = invitationController.Create(CreateInvitation(meet, user));
@@ -50,7 +50,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(null, meet.Owner);
+            var invitationController = GetInvitationControlller(null, meet.Owner, true);
 
             //act
             IHttpActionResult response = invitationController.Create(CreateInvitation(meet, user));
@@ -65,7 +65,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
             meet.InvitedPeople.Add(user.Id, user);
@@ -81,8 +81,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            meet.InvitedPeople.Add(user.Id, user);
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
             IHttpActionResult response = invitationController.Get(CreateInvitation(meet, user));
@@ -93,28 +92,12 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void Get_NonExistMeet_ShouldNotFound()
-        {
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            meet.InvitedPeople.Add(user.Id, user);
-            var invitationController = GetInvitationControlller(null, meet.Owner);
-
-            //act
-            IHttpActionResult response = invitationController.Get(CreateInvitation(meet, user));
-
-            //assert
-            Assert.IsTrue(response is NotFoundWithMessageResult);
-        }
-
-        [TestMethod]
         public void Get_NotExistInvitation_ShouldReturnNotFound()
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, false);
 
             //act
             IHttpActionResult response = invitationController.Get(CreateInvitation(meet, user));
@@ -130,8 +113,7 @@ namespace MeetGenerator.Tests.ControllerTests
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            meet.InvitedPeople.Add(user.Id, user);
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
             IHttpActionResult response = invitationController.Delete(CreateInvitation(meet, user));
@@ -142,28 +124,12 @@ namespace MeetGenerator.Tests.ControllerTests
         }
 
         [TestMethod]
-        public void Delete_NonExistMeet_ShouldNotFound()
-        {
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            meet.InvitedPeople.Add(user.Id, user);
-            var invitationController = GetInvitationControlller(null, meet.Owner);
-
-            //act
-            IHttpActionResult response = invitationController.Delete(CreateInvitation(meet, user));
-
-            //assert
-            Assert.IsTrue(response is NotFoundWithMessageResult);
-        }
-
-        [TestMethod]
         public void Delete_NotExistInvitation_ShouldReturnNotFound()
         {
             //arrange
             Meeting meet = TestDataHelper.GenerateMeeting();
             User user = TestDataHelper.GenerateUser();
-            var invitationController = GetInvitationControlller(meet, meet.Owner);
+            var invitationController = GetInvitationControlller(meet, meet.Owner, false);
 
             //act
             IHttpActionResult response = invitationController.Delete(CreateInvitation(meet, user));
@@ -182,11 +148,12 @@ namespace MeetGenerator.Tests.ControllerTests
             };
         }
 
-        InvitationController GetInvitationControlller(Meeting getMeetingResult, User getUserResult)
+        InvitationController GetInvitationControlller(Meeting getMeetingResult, User getUserResult, bool IsExistInvitationResult)
         {
             return new InvitationController(
                 TestDataHelper.GetIMeetingRepositoryMock(getMeetingResult),
-                TestDataHelper.GetIUserRepositoryMock(getUserResult));
+                TestDataHelper.GetIUserRepositoryMock(getUserResult),
+                TestDataHelper.GetIInvitationRepositoryMock(IsExistInvitationResult));
         }
     }
 }

@@ -34,78 +34,13 @@ namespace MeetGenerator.Tests
         }
 
         [TestMethod]
-        public void CreateInvitation_ShouldCreate()
-        {
-            //arange
-            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
-            MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
-            UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
-            Meeting meeting = TestDataHelper.GenerateMeeting();
-
-            //act
-            userRep.CreateUser(meeting.Owner);
-            placeRep.CreatePlace(meeting.Place);
-            meetRep.CreateMeeting(meeting);
-
-            foreach (User user in meeting.InvitedPeople.Values)
-            {
-                userRep.CreateUser(user);
-                meetRep.CreateInvitation(user.Id, meeting.Id);
-            }
-
-            Meeting resultMeeting = meetRep.GetMeeting(meeting.Id);
-
-            //assert
-            TestDataHelper.PrintMeetingInfo(meeting);
-            TestDataHelper.PrintMeetingInfo(resultMeeting);
-            Assert.IsTrue(TestDataHelper.CompareInvitedUsersLists
-                (meeting.InvitedPeople.Values, resultMeeting.InvitedPeople.Values));
-        }
-
-        [TestMethod]
-        public void DeleteInvitation_ShouldDelete()
-        {
-            //arange
-            PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
-            MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
-            UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
-
-            Meeting meeting = TestDataHelper.GenerateMeeting();
-            User invitedUser = TestDataHelper.GenerateUser();
-
-            meeting.InvitedPeople.Clear();
-
-            //act
-            userRep.CreateUser(meeting.Owner);
-            placeRep.CreatePlace(meeting.Place);
-            meetRep.CreateMeeting(meeting);
-
-            userRep.CreateUser(invitedUser);
-            meetRep.CreateInvitation(invitedUser.Id, meeting.Id);
-
-            Meeting resultMeeting = meetRep.GetMeeting(meeting.Id);
-
-            bool inviteResult = resultMeeting.InvitedPeople.Count == 1;
-            TestDataHelper.PrintMeetingInfo(resultMeeting);
-
-            meetRep.DeleteInvitation(invitedUser.Id, resultMeeting.Id);
-
-            resultMeeting = meetRep.GetMeeting(meeting.Id);
-
-            bool deleteResult = resultMeeting.InvitedPeople.Count == 0;
-
-            //assert
-            TestDataHelper.PrintMeetingInfo(resultMeeting);
-            Assert.IsTrue(inviteResult & deleteResult);
-        }
-
-        [TestMethod]
         public void Delete_ShouldDelete()
         {
             //arange
             PlaceRepository placeRep = new PlaceRepository(Properties.Resources.ConnectionString);
             MeetingRepository meetRep = new MeetingRepository(Properties.Resources.ConnectionString);
             UserRepository userRep = new UserRepository(Properties.Resources.ConnectionString);
+            InvitationRepository inviteRep = new InvitationRepository(Properties.Resources.ConnectionString);
             Meeting meeting = TestDataHelper.GenerateMeeting();
 
             //act
@@ -115,7 +50,7 @@ namespace MeetGenerator.Tests
             foreach (User user in meeting.InvitedPeople.Values)
             {
                 userRep.CreateUser(user);
-                meetRep.CreateInvitation(user.Id, meeting.Id);
+                inviteRep.Create(CreateInvitation(meeting, user));
             }
 
             Meeting resultMeeting = meetRep.GetMeeting(meeting.Id);
@@ -190,6 +125,15 @@ namespace MeetGenerator.Tests
 
             //assert
             Assert.IsTrue(TestDataHelper.CompareMeetingsLists(meetingList, resultMeetingList));
+        }
+
+        Invitation CreateInvitation(Meeting meeting, User user)
+        {
+            return new Invitation
+            {
+                MeetingID = meeting.Id,
+                UserID = user.Id
+            };
         }
 
         [TestCleanup()]
