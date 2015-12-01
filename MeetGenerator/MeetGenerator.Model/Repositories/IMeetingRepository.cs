@@ -19,7 +19,9 @@ namespace MeetGenerator.Model.Repositories
 
         void UpdateMeetingInfo(Meeting meeting);
 
-        void InviteUserToMeeting(Guid userId, Guid meetingId);
+        void CreateInvitation(Guid userId, Guid meetingId);
+
+        void DeleteInvitation(Guid userId, Guid meetingId);
 
         void DeleteMeeting(Meeting meeting);
     }

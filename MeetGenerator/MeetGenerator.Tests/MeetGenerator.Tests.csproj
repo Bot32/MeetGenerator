@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerTests\MeetingControllerTest.cs" />
+    <Compile Include="ControllerTests\InvitationControllerTest.cs" />
     <Compile Include="ControllerTests\UserControllerTest.cs" />
     <Compile Include="ControllerTests\PlaceControllerTest.cs" />
     <Compile Include="RepositoryTests\MeetingRepositoryTest.cs" />

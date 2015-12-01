@@ -174,87 +174,87 @@ namespace MeetGenerator.Tests.ControllerTests
             Assert.IsTrue(response is NotFoundResult);
         }
 
-        [TestMethod]
-        public void InviteUserToMeeting_ShouldReturnOK()
-        {
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
+        //[TestMethod]
+        //public void InviteUserToMeeting_ShouldReturnOK()
+        //{
+        //    //arrange
+        //    Meeting meet = TestDataHelper.GenerateMeeting();
+        //    User user = TestDataHelper.GenerateUser();
+        //    var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
-            //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(
-                new Invitation
-                {
-                    MeetingID = meet.Id,
-                    UserID = user.Id
-                });
+        //    //act
+        //    IHttpActionResult response = meetController.InviteUserToMeeting(
+        //        new Invitation
+        //        {
+        //            MeetingID = meet.Id,
+        //            UserID = user.Id
+        //        });
 
-            //assert
-            Assert.IsTrue(response is OkResult);
-        }
+        //    //assert
+        //    Assert.IsTrue(response is OkResult);
+        //}
 
-        [TestMethod]
-        public void InviteUserToMeeting_NonExistUser_ShouldNotFound()
-        {
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            var meetController = GetMeetingControlller(meet, null, meet.Place);
+        //[TestMethod]
+        //public void InviteUserToMeeting_NonExistUser_ShouldNotFound()
+        //{
+        //    //arrange
+        //    Meeting meet = TestDataHelper.GenerateMeeting();
+        //    User user = TestDataHelper.GenerateUser();
+        //    var meetController = GetMeetingControlller(meet, null, meet.Place);
 
-            //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(
-                new Invitation
-                {
-                    MeetingID = meet.Id,
-                    UserID = user.Id
-                });
+        //    //act
+        //    IHttpActionResult response = meetController.InviteUserToMeeting(
+        //        new Invitation
+        //        {
+        //            MeetingID = meet.Id,
+        //            UserID = user.Id
+        //        });
 
-            //assert
-            Assert.IsTrue(response is NotFoundWithMessageResult);
-        }
+        //    //assert
+        //    Assert.IsTrue(response is NotFoundWithMessageResult);
+        //}
 
-        [TestMethod]
-        public void InviteUserToMeeting_NonExistMeet_ShouldNotFound()
-        {
-            //arrange
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
+        //[TestMethod]
+        //public void InviteUserToMeeting_NonExistMeet_ShouldNotFound()
+        //{
+        //    //arrange
+        //    //arrange
+        //    Meeting meet = TestDataHelper.GenerateMeeting();
+        //    User user = TestDataHelper.GenerateUser();
+        //    var meetController = GetMeetingControlller(null, meet.Owner, meet.Place);
 
-            //act
-            IHttpActionResult response = meetController.InviteUserToMeeting(
-                new Invitation
-                {
-                    MeetingID = meet.Id,
-                    UserID = user.Id
-                });
+        //    //act
+        //    IHttpActionResult response = meetController.InviteUserToMeeting(
+        //        new Invitation
+        //        {
+        //            MeetingID = meet.Id,
+        //            UserID = user.Id
+        //        });
 
-            //assert
-            Assert.IsTrue(response is NotFoundWithMessageResult);
-        }
+        //    //assert
+        //    Assert.IsTrue(response is NotFoundWithMessageResult);
+        //}
 
-        [TestMethod]
-        public void InviteUserToMeeting_Alreadyinvited_ShouldReturnBadRequest()
-        {
-            //arrange
-            Meeting meet = TestDataHelper.GenerateMeeting();
-            User user = TestDataHelper.GenerateUser();
-            var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
+        //[TestMethod]
+        //public void InviteUserToMeeting_Alreadyinvited_ShouldReturnBadRequest()
+        //{
+        //    //arrange
+        //    Meeting meet = TestDataHelper.GenerateMeeting();
+        //    User user = TestDataHelper.GenerateUser();
+        //    var meetController = GetMeetingControlller(meet, meet.Owner, meet.Place);
 
-            //act
-            meet.InvitedPeople.Add(user.Id, user);
-            IHttpActionResult response = meetController.InviteUserToMeeting(
-                new Invitation
-                {
-                    MeetingID = meet.Id,
-                    UserID = user.Id
-                });
+        //    //act
+        //    meet.InvitedPeople.Add(user.Id, user);
+        //    IHttpActionResult response = meetController.InviteUserToMeeting(
+        //        new Invitation
+        //        {
+        //            MeetingID = meet.Id,
+        //            UserID = user.Id
+        //        });
 
-            //assert
-            Assert.IsTrue(response is BadRequestErrorMessageResult);
-        }
+        //    //assert
+        //    Assert.IsTrue(response is BadRequestErrorMessageResult);
+        //}
 
         MeetingController GetMeetingControlller(Meeting getMeetingResult, User getUserResult, Place getPlaceResult)
         {

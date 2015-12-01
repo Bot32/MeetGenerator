@@ -159,6 +159,21 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
             return command;
         }
 
+        public static SqlCommand Build_DeleteInvitationUserToMeetingCommand(Guid userId, Guid meetingId)
+        {
+            SqlCommand command = new SqlCommand();
+
+            Log("delete invitation user to meeting");
+
+            command.CommandText = "delete from [dbo].[Invitations] where MeetingID = @MeetingID and UserID = @UserID";
+            command.Parameters.AddWithValue("@MeetingID", meetingId);
+            command.Parameters.AddWithValue("@UserID", userId);
+
+            Log("delete invitation user to meeting", command);
+
+            return command;
+        }
+
         public static SqlCommand Build_GetAllUsersIdInvitedToMeetingCommand(Guid meetingId)
         {
             SqlCommand command = new SqlCommand();

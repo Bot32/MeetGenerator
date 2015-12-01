@@ -37,7 +37,6 @@ namespace MeetGenerator.API.Controllers
             _userRepository = repository;
         }
 
-        // POST: api/User/Create
         [HttpPost]
         public IHttpActionResult Create(User user)
         {
@@ -70,7 +69,6 @@ namespace MeetGenerator.API.Controllers
             return Created("", user);
         }
 
-        // GET: api/User/Get
         [HttpGet]
         public IHttpActionResult Get(String userIdentificator)
         {
@@ -97,7 +95,6 @@ namespace MeetGenerator.API.Controllers
             return Ok(user);
         }
 
-        // PUT: api/User/Update
         [HttpPut]
         public IHttpActionResult Update(User user)
         {
@@ -128,7 +125,6 @@ namespace MeetGenerator.API.Controllers
             return Created("", user);
         }
 
-        // DELETE: api/User/Delete
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {

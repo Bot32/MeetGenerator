@@ -45,7 +45,6 @@ namespace MeetGenerator.API.Controllers
             _placeRepository = placeRepository;
         }
 
-        // POST: api/Meeting/Create
         [HttpPost]
         public IHttpActionResult Create(Meeting meeting)
         {
@@ -85,47 +84,45 @@ namespace MeetGenerator.API.Controllers
             return Created("", meeting);
         }
 
-        // POST: api/Meeting/Create
-        [HttpPost]
-        public IHttpActionResult InviteUserToMeeting(Invitation invitation)
-        {
-            Guid requestId = Guid.NewGuid();
+        //[HttpPost]
+        //public IHttpActionResult InviteUserToMeeting(Invitation invitation)
+        //{
+        //    Guid requestId = Guid.NewGuid();
 
-            Log("Received invite user to meeting POST HTTP-request. Meeting ID = " +
-                invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
+        //    Log("Received invite user to meeting POST HTTP-request. Meeting ID = " +
+        //        invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
 
-            User user = _userRepository.GetUser(invitation.UserID);
-            Meeting meeting = _meetRepository.GetMeeting(invitation.MeetingID);
+        //    User user = _userRepository.GetUser(invitation.UserID);
+        //    Meeting meeting = _meetRepository.GetMeeting(invitation.MeetingID);
 
-            if (user == null)
-            {
-                Log("Send NotFoundWithMessageResult(404) response to invite user to meeting POST HTTP-request." +
-                    "Message: User not found.", requestId);
-                return new NotFoundWithMessageResult("User not found.");
-            }
+        //    if (user == null)
+        //    {
+        //        Log("Send NotFoundWithMessageResult(404) response to invite user to meeting POST HTTP-request." +
+        //            "Message: User not found.", requestId);
+        //        return new NotFoundWithMessageResult("User not found.");
+        //    }
 
-            if (meeting == null)
-            {
-                Log("Send NotFoundWithMessageResult(404) response to invite user to meeting POST HTTP-request." +
-                    "Message: Meeting not found.", requestId);
-                return new NotFoundWithMessageResult("Meeting not found.");
-            }
+        //    if (meeting == null)
+        //    {
+        //        Log("Send NotFoundWithMessageResult(404) response to invite user to meeting POST HTTP-request." +
+        //            "Message: Meeting not found.", requestId);
+        //        return new NotFoundWithMessageResult("Meeting not found.");
+        //    }
 
-            if (meeting.InvitedPeople.ContainsKey(invitation.UserID))
-            {
-                Log("Send ErrorMessageResult(400) response to invite user to meeting POST HTTP-request. " +
-                    "Message: User already invited.", requestId);
-                return BadRequest("User already invited.");
-            }
+        //    if (meeting.InvitedPeople.ContainsKey(invitation.UserID))
+        //    {
+        //        Log("Send ErrorMessageResult(400) response to invite user to meeting POST HTTP-request. " +
+        //            "Message: User already invited.", requestId);
+        //        return BadRequest("User already invited.");
+        //    }
 
-            _meetRepository.InviteUserToMeeting(invitation.UserID, invitation.MeetingID);
+        //    _meetRepository.InviteUserToMeeting(invitation.UserID, invitation.MeetingID);
 
-            Log("Send OkResult(200) response to invite user to meeting POST HTTP-request.", requestId);
+        //    Log("Send OkResult(200) response to invite user to meeting POST HTTP-request.", requestId);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-        // GET: api/Meeting/Get
         [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
@@ -147,7 +144,6 @@ namespace MeetGenerator.API.Controllers
             return Ok(meeting);
         }
 
-        // PUT: api/Meeting/Update
         [HttpPut]
         public IHttpActionResult Update(Meeting meeting)
         {
@@ -178,7 +174,6 @@ namespace MeetGenerator.API.Controllers
             return Created("", meeting);
         }
 
-        // DELETE: api/Meeting/Delete
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {

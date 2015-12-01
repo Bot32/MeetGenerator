@@ -46,7 +46,7 @@ namespace MeetGenerator.Repository.SQL.Repositories
             return meeting;
         }
 
-        public void InviteUserToMeeting(Guid userId, Guid meetingId)
+        public void CreateInvitation(Guid userId, Guid meetingId)
         {
             Log("Begin creating Invitation User to Meeting in database. Meeting ID = " + meetingId + ". User ID = " + userId);
 
@@ -54,6 +54,16 @@ namespace MeetGenerator.Repository.SQL.Repositories
                 (sqlConnection, CommandList.Build_InviteUserToMeetingCommand(userId, meetingId));
 
             Log("End creating Invitation User to Meeting in database. Meeting ID = " + meetingId + ". User ID = " + userId);
+        }
+
+        public void DeleteInvitation(Guid userId, Guid meetingId)
+        {
+            Log("Begin deleting Invitation User to Meeting in database. Meeting ID = " + meetingId + ". User ID = " + userId);
+
+            DatabaseConnector.PushCommandToDatabase
+                (sqlConnection, CommandList.Build_DeleteInvitationUserToMeetingCommand(userId, meetingId));
+
+            Log("End deleting Invitation User to Meeting in database. Meeting ID = " + meetingId + ". User ID = " + userId);
         }
 
         public Dictionary<Guid, User> GetAllUsersInvitedToMeeting(Guid meetingId)

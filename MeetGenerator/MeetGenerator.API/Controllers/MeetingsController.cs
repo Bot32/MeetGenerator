@@ -38,7 +38,6 @@ namespace MeetGenerator.API.Controllers
             _userRepository = userReository;
         }
 
-        // GET: api/Meetings/Get
         [HttpGet]
         public IHttpActionResult Get(Guid userId)
         {

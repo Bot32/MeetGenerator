@@ -34,7 +34,6 @@ namespace MeetGenerator.API.Controllers
             _placeRepository = rep;
         }
 
-        // POST: api/Place/Create
         [HttpPost]
         public IHttpActionResult Create(Place place)
         {
@@ -58,7 +57,6 @@ namespace MeetGenerator.API.Controllers
             return Created("", place);
         }
 
-        // GET: api/Place/Get
         [HttpGet]
         public IHttpActionResult Get(Guid id)
         {
@@ -80,7 +78,6 @@ namespace MeetGenerator.API.Controllers
             return Ok(place);
         }
 
-        // PUT: api/Place/Update
         [HttpPut]
         public IHttpActionResult Update(Place place)
         {
@@ -109,7 +106,6 @@ namespace MeetGenerator.API.Controllers
             return Created("", place);
         }
 
-        // DELETE: api/Place/Delete
         [HttpDelete]
         public IHttpActionResult Delete(Guid id)
         {
