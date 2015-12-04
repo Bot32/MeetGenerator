@@ -6,16 +6,15 @@
         xmlns:local="clr-namespace:MeetGenWPFClient"
         xmlns:Properties="clr-namespace:MeetGenWPFClient.Properties" x:Class="MeetGenWPFClient.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="504.8" Width="525">
+        Title="MainWindow" Height="504.8" Width="534">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="100
-                           "/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="HostAddress_TextBox" Margin="1,1,1,1" Text="http://localhost:61689/"></TextBox>
+        <TextBox x:Name="HostAddress_TextBox" Margin="1,1,1,1" Text="{Binding Path=HostAddress}"></TextBox>
         <ScrollViewer Grid.Row="1" Margin="1,1,1,1">
             <TabControl x:Name="tabControl" >
                 <TabItem Header="User" Margin="-5,-1,1,-1">
@@ -27,24 +26,24 @@
                         <GroupBox Header="User info" Grid.Column="0">
                             <StackPanel >
                                 <Label Content="ID"/>
-                                <TextBox x:Name="UserID_TextBox"/>
+                                <TextBox x:Name="UserID_TextBox" Text="{Binding Path=User.Id}"/>
                                 <Label Content="Email"/>
-                                <TextBox x:Name="UserEmail_TextBox" Text="NepisatG@addkap.ru"/>
+                                <TextBox x:Name="UserEmail_TextBox" Text="{Binding Path=User.Email}"/>
                                 <Label Content="First name"/>
-                                <TextBox x:Name="UserFirstName_TextBox" Text="vasyan"/>
+                                <TextBox x:Name="UserFirstName_TextBox" Text="{Binding Path=User.FirstName}"/>
                                 <Label Content="Last name"/>
-                                <TextBox x:Name="UserLastName_TextBox" Text="pupen"/>
-                                <Button x:Name="ResetUserInfo_Button" Margin="0,5,0,0" Content="Reset" Click="ResetUserInfo_Button_Click"/>
-                                <Button x:Name="SendUserIdToMeetingTab_Button" Margin="0,5,0,0" Content="Send user ID to meeting tab" Click="SendUserIdToMeetingTab_Button_Click"/>
+                                <TextBox x:Name="UserLastName_TextBox" Text="{Binding Path=User.LastName}"/>
+                                <Button x:Name="ResetUserInfo_Button" Command="{Binding ResetUserData}" Margin="0,5,0,0" Content="Reset"/>
+                                <Button Command="{Binding SendUserToMeetingTab}" Margin="0,5,0,0" Content="Send user to meeting tab"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Actions" Grid.Column="1">
                             <StackPanel>
-                                <Button x:Name="CreateUser_Button" Content="Create" Margin="1,5,1,5" Click="CreateUser_Button_Click"/>
-                                <Button x:Name="GetUserByID_Button" Content="Get by ID" Margin="1,5,1,5" Click="GetUserByID_Button_Click"/>
-                                <Button x:Name="GetUserByEmail_Button" Content="Get by email" Margin="1,5,1,5" Click="GetUserByEmail_Button_Click"/>
-                                <Button x:Name="UpdateUser_Button" Content="Update" Margin="1,5,1,5" Click="UpdateUser_Button_Click"/>
-                                <Button x:Name="DeleteUser_Button" Content="Delete" Margin="1,5,1,5" Click="DeleteUser_Button_Click"/>
+                                <Button x:Name="CreateUser_Button" Content="Create" Command="{Binding CreateUser}" Margin="1,5,1,5"/>
+                                <Button x:Name="GetUserByID_Button" Content="Get by ID" Command="{Binding GetUserByID}" Margin="1,5,1,5"/>
+                                <Button x:Name="GetUserByEmail_Button" Content="Get by email" Command="{Binding GetUserByEmail}" Margin="1,5,1,5"/>
+                                <Button x:Name="UpdateUser_Button" Content="Update" Command="{Binding UpdateUser}" Margin="1,5,1,5"/>
+                                <Button x:Name="DeleteUser_Button" Content="Delete" Command="{Binding DeleteUser}" Margin="1,5,1,5"/>
                             </StackPanel>
                         </GroupBox>
                     </Grid>
@@ -55,24 +54,24 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="User info" Grid.Column="0">
+                        <GroupBox Header="Place info" Grid.Column="0">
                             <StackPanel >
                                 <Label Content="ID"/>
-                                <TextBox x:Name="PlaceID_TextBox"/>
+                                <TextBox x:Name="PlaceID_TextBox" Text="{Binding Path=Place.Id}"/>
                                 <Label Content="Address"/>
-                                <TextBox x:Name="PlaceAddress_TextBox" Text="Pushkin Street, Kolotuschkin h. 1"/>
+                                <TextBox x:Name="PlaceAddress_TextBox" Text="{Binding Path=Place.Address}"/>
                                 <Label Content="Description"/>
-                                <TextBox x:Name="PlaceDescription_TextBox" Text="just place"/>
-                                <Button x:Name="ResetPlaceInfo_Button" Margin="0,5,0,0" Content="Reset" Click="ResetPlaceInfo_Button_Click"/>
-                                <Button x:Name="SendPlaceIdToMeetingTab_Button" Margin="0,5,0,0" Content="Send place ID to meeting tab" Click="SendPlaceIdToMeetingTab_Button_Click"/>
+                                <TextBox x:Name="PlaceDescription_TextBox" Text="{Binding Path=Place.Description}"/>
+                                <Button x:Name="ResetPlaceInfo_Button" Command="{Binding ResetPlaceData}" Margin="0,5,0,0" Content="Reset"/>
+                                <Button Command="{Binding SendPlaceToMeetingTab}" Margin="0,5,0,0" Content="Send place ID to meeting tab"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Actions" Grid.Column="1">
                             <StackPanel>
-                                <Button x:Name="CreatePlace_Button" Content="Create" Margin="1,5,1,5" Click="CreatePlace_Button_Click"/>
-                                <Button x:Name="GetPlace_Button" Content="Get" Margin="1,5,1,5" Click="GetPlace_Button_Click"/>
-                                <Button x:Name="UpdatePlace_Button" Content="Update" Margin="1,5,1,5" Click="UpdatePlace_Button_Click"/>
-                                <Button x:Name="DeletePlace_Button" Content="Delete" Margin="1,5,1,5" Click="DeletePlace_Button_Click"/>
+                                <Button x:Name="CreatePlace_Button" Command="{Binding CreatePlace}" Content="Create" Margin="1,5,1,5"/>
+                                <Button x:Name="GetPlace_Button" Command="{Binding GetPlace}" Content="Get" Margin="1,5,1,5"/>
+                                <Button x:Name="UpdatePlace_Button" Command="{Binding UpdatePlace}" Content="Update" Margin="1,5,1,5"/>
+                                <Button x:Name="DeletePlace_Button" Command="{Binding DeletePlace}" Content="Delete" Margin="1,5,1,5"/>
                             </StackPanel>
                         </GroupBox>
                     </Grid>
@@ -83,29 +82,47 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="Place info" Grid.Row="0" Grid.Column="0">
+                        <GroupBox Header="Meeting info" Grid.Row="0" Grid.Column="0">
                             <StackPanel >
                                 <Label Content="ID"/>
-                                <TextBox x:Name="MeetingID_TextBox"/>
+                                <TextBox Text="{Binding Path=Meeting.Id}"/>
                                 <Label Content="Title"/>
-                                <TextBox x:Name="MeetingTitle_TextBox" Text="just meeting title"/>
+                                <TextBox Text="{Binding Path=Meeting.Title}"/>
                                 <Label Content="Description"/>
-                                <TextBox x:Name="MeetingDescription_TextBox" Text="just meeting description"/>
+                                <TextBox Text="{Binding Path=Meeting.Description}"/>
                                 <Label Content="Date"/>
-                                <DatePicker x:Name="MeetingDate_DatePicker" DisplayDate="2016-11-30"></DatePicker>
-                                <Label Content="Owner ID"/>
-                                <TextBox x:Name="MeetingOwnerID_TextBox"/>
-                                <Label Content="Place ID"/>
-                                <TextBox x:Name="MeetingPlaceID_TextBox"/>
-                                <Button x:Name="ResetMeetingInfo_Button" Content="Reset" Margin="0,5,0,0" Click="ResetMeetingInfo_Button_Click" />
+                                <DatePicker Text="{Binding Path=Meeting.Date}"/>
+                                <Expander Header="Owner">
+                                    <StackPanel>
+                                        <Label Content="ID"/>
+                                        <TextBox Text="{Binding Path=Meeting.Owner.Id}"/>
+                                        <Label Content="Email"/>
+                                        <TextBox Text="{Binding Path=Meeting.Owner.Email}"/>
+                                        <Label Content="First name"/>
+                                        <TextBox Text="{Binding Path=Meeting.Owner.FirstName}"/>
+                                        <Label Content="Last name"/>
+                                        <TextBox Text="{Binding Path=Meeting.Owner.LastName}"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Expander Header="Place">
+                                    <StackPanel>
+                                        <Label Content="ID"/>
+                                        <TextBox Text="{Binding Path=Meeting.Place.Id}"/>
+                                        <Label Content="Address"/>
+                                        <TextBox Text="{Binding Path=Meeting.Place.Address}"/>
+                                        <Label Content="Description"/>
+                                        <TextBox Text="{Binding Path=Meeting.Place.Description}"/>
+                                    </StackPanel>
+                                </Expander>
+                                <Button Command="{Binding ResetMeetingData}" Content="Reset" Margin="0,5,0,0" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Actions" Grid.Row="0" Grid.Column="1">
+                        <GroupBox Name="box" Header="Actions" Grid.Row="0" Grid.Column="1">
                             <StackPanel>
-                                <Button x:Name="CreateMeeting_Button" Content="Create" Margin="1,5,1,5" Click="CreateMeeting_Button_Click"/>
-                                <Button x:Name="GetMeeting_Button" Content="Get" Margin="1,5,1,5" Click="GetMeeting_Button_Click"/>
-                                <Button x:Name="UpdateMeeting_Button" Content="Update" Margin="1,5,1,5" Click="UpdateMeeting_Button_Click"/>
-                                <Button x:Name="DeleteMeeting_Button" Content="Delete" Margin="1,5,1,5" Click="DeleteMeeting_Button_Click"/>
+                                <Button Command="{Binding CreateMeeting}" Content="Create" Margin="1,5,1,5"/>
+                                <Button Command="{Binding GetMeeting}" Content="Get" Margin="1,5,1,5"/>
+                                <Button Command="{Binding UpdateMeeting}" Content="Update" Margin="1,5,1,5"/>
+                                <Button Command="{Binding DeleteMeeting}" Content="Delete" Margin="1,5,1,5"/>
                             </StackPanel>
                         </GroupBox>
                     </Grid>

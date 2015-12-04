@@ -11,7 +11,7 @@ using WebApiClientLibrary.RequestHadlers;
 
 namespace WebApiClientLibrary.Tests
 {
-    //[TestClass]
+    [TestClass]
     public class MeetingRequestHandlerTest
     {
         string hostAddress = Properties.Resources.host_address;
@@ -80,7 +80,7 @@ namespace WebApiClientLibrary.Tests
         }
 
         [TestMethod]
-        public async Task Invite_ShouldReturnOk()
+        public async Task CreateInvitation_ShouldReturnOk()
         {
             //arrange 
             var meetingHandler = new MeetingRequestHandler(hostAddress);
@@ -104,7 +104,80 @@ namespace WebApiClientLibrary.Tests
             HttpResponseMessage response3 = await meetingHandler.Create(meeting);
             Meeting resultMeet = await response3.Content.ReadAsAsync<Meeting>();
 
-            HttpResponseMessage resultResponse = await meetingHandler.Invite(resultMeet.Id, resultMeet.Owner.Id);
+            HttpResponseMessage resultResponse = await meetingHandler.CreateInvitation
+                (TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
+
+            //assert
+            TestDataHelper.PrintMeetingInfo(resultMeet);
+            Assert.IsTrue(resultResponse.IsSuccessStatusCode);
+        }
+
+        [TestMethod]
+        public async Task CheckInvitation_ShouldReturnOk()
+        {
+            //arrange 
+            var meetingHandler = new MeetingRequestHandler(hostAddress);
+            var userHandler = new UserRequestHandler(hostAddress);
+            var placeHandler = new PlaceRequestHandler(hostAddress);
+
+            Place place = TestDataHelper.GeneratePlace();
+            User user = TestDataHelper.GenerateUser();
+
+            Meeting meeting = TestDataHelper.GenerateMeeting();
+            meeting.Date = new DateTime(2016, 1, 1);
+            meeting.InvitedPeople.Clear();
+
+            //act
+            HttpResponseMessage response1 = await userHandler.Create(user);
+            meeting.Owner = await response1.Content.ReadAsAsync<User>();
+
+            HttpResponseMessage response2 = await placeHandler.Create(place);
+            meeting.Place = await response2.Content.ReadAsAsync<Place>();
+
+            HttpResponseMessage response3 = await meetingHandler.Create(meeting);
+            Meeting resultMeet = await response3.Content.ReadAsAsync<Meeting>();
+
+            HttpResponseMessage response4 = await meetingHandler.CreateInvitation
+                (TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
+
+            HttpResponseMessage resultResponse = await meetingHandler.CheckInvitation
+                (TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
+
+            //assert
+            TestDataHelper.PrintMeetingInfo(resultMeet);
+            Assert.IsTrue(resultResponse.IsSuccessStatusCode);
+        }
+
+        [TestMethod]
+        public async Task DeleteInvitation_ShouldReturnOk()
+        {
+            //arrange 
+            var meetingHandler = new MeetingRequestHandler(hostAddress);
+            var userHandler = new UserRequestHandler(hostAddress);
+            var placeHandler = new PlaceRequestHandler(hostAddress);
+
+            Place place = TestDataHelper.GeneratePlace();
+            User user = TestDataHelper.GenerateUser();
+
+            Meeting meeting = TestDataHelper.GenerateMeeting();
+            meeting.Date = new DateTime(2016, 1, 1);
+            meeting.InvitedPeople.Clear();
+
+            //act
+            HttpResponseMessage response1 = await userHandler.Create(user);
+            meeting.Owner = await response1.Content.ReadAsAsync<User>();
+
+            HttpResponseMessage response2 = await placeHandler.Create(place);
+            meeting.Place = await response2.Content.ReadAsAsync<Place>();
+
+            HttpResponseMessage response3 = await meetingHandler.Create(meeting);
+            Meeting resultMeet = await response3.Content.ReadAsAsync<Meeting>();
+
+            HttpResponseMessage response4 = await meetingHandler.CreateInvitation
+                (TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
+
+            HttpResponseMessage resultResponse = await meetingHandler.CancelInvitation
+                (TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
 
             //assert
             TestDataHelper.PrintMeetingInfo(resultMeet);
@@ -168,7 +241,7 @@ namespace WebApiClientLibrary.Tests
             HttpResponseMessage response3 = await meetingHandler.Create(meeting);
             Meeting resultMeet = await response3.Content.ReadAsAsync<Meeting>();
 
-            await meetingHandler.Invite(resultMeet.Id, resultMeet.Owner.Id);
+            await meetingHandler.CreateInvitation(TestDataHelper.CreateInvitation(resultMeet, resultMeet.Owner));
 
             HttpResponseMessage response4 = await meetingHandler.Get(resultMeet.Id);
             resultMeet = await response4.Content.ReadAsAsync<Meeting>();
@@ -212,7 +285,9 @@ namespace WebApiClientLibrary.Tests
             }
 
             foreach (Meeting meet in meetings)
+            {
                 await meetingHandler.Create(meet);
+            }
 
             HttpResponseMessage response = await meetingHandler.GetAllMeetingsCreatedByUser(user.Id);
             resultMeetings = await response.Content.ReadAsAsync<List<Meeting>>();

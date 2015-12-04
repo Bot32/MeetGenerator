@@ -58,6 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RequestHadlers\CRUDGeneralRequestHandler.cs" />
     <Compile Include="RequestHadlers\MeetingRequestHandler.cs" />
     <Compile Include="RequestHadlers\PlaceRequestHandler.cs" />
     <Compile Include="RequestHadlers\UserRequestHandler.cs" />

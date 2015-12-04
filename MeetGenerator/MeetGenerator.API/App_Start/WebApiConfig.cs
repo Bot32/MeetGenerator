@@ -15,6 +15,11 @@ namespace MeetGenerator.API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "Invitation",
+                routeTemplate: "api/{controller}/{MeetingID}/{UserID}"
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

@@ -50,9 +50,9 @@ namespace MeetGenerator.Repository.SQL.Repositories
             Invitation resultInvitation =  DatabaseConnector.GetDataFromDatabase<Invitation>
                 (sqlConnection, CommandList.Build_GetInvitationUserToMeetingCommand(invitation), new InvitationBuilder());
 
-            return resultInvitation != null;
-
             Log("End receiving Invitation User to Meeting in database.", invitation);
+
+            return resultInvitation != null;
         }
 
         void Log(string logMessage)

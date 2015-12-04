@@ -12,72 +12,52 @@ namespace WebApiClientLibrary.RequestHadlers
 {
     public class MeetingRequestHandler : IMeetingRequestHandler
     {
-        string baseAddress;
+        CRUDGeneralRequestHandler _crudHandler;
+        const string _controller = "Meeting";
 
         public MeetingRequestHandler(string baseAddress)
         {
-            this.baseAddress = baseAddress;
+            _crudHandler = new CRUDGeneralRequestHandler(baseAddress);
         }
 
-        public async Task<HttpResponseMessage> Create(Meeting meeting)
+        public Task<HttpResponseMessage> Create(Meeting meeting)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                return await client.PostAsJsonAsync("api/Meeting/Create", meeting);
-            }
+            return _crudHandler.Create(_controller, meeting);
         }
 
-        public async Task<HttpResponseMessage> Delete(Guid id)
+        public Task<HttpResponseMessage> Get(Guid id)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress); ;
-                return await client.DeleteAsync("api/Meeting/Delete?id=" + id);
-            }
+            return _crudHandler.Get(_controller, id.ToString());
         }
 
-        public async Task<HttpResponseMessage> GetAllMeetingsCreatedByUser(Guid id)
+        public Task<HttpResponseMessage> Update(Meeting meeting)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                return await client.GetAsync("api/Meetings/Get?userId=" + id);
-            }
+            return _crudHandler.Update(_controller, meeting);
         }
 
-        public async Task<HttpResponseMessage> Get(Guid id)
+        public Task<HttpResponseMessage> Delete(Guid id)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                return await client.GetAsync("api/Meeting/Get?id=" + id);
-            }
+            return _crudHandler.Delete(_controller, id.ToString());
         }
 
-        public async Task<HttpResponseMessage> Invite(Guid meetingId, Guid userId)
+        public Task<HttpResponseMessage> GetAllMeetingsCreatedByUser(Guid id)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                return await client.PostAsync("api/Meeting/Get?userId=" + userId + "&" + 
-                    "meetingId=" + meetingId, new StringContent(""));
-            }
+            return _crudHandler.Get("Meetings", id.ToString());
         }
 
-        public async Task<HttpResponseMessage> Update(Meeting meeting)
+        public Task<HttpResponseMessage> CreateInvitation(Invitation invitation)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            return _crudHandler.Create("Invitation", invitation);
+        }
 
-                return await client.PutAsJsonAsync("api/Meeting/Update", meeting);
-            }
+        public Task<HttpResponseMessage> CancelInvitation(Invitation invitation)
+        {
+            return _crudHandler.Delete("Invitation", invitation.MeetingID.ToString(), invitation.UserID.ToString());
+        }
+
+        public Task<HttpResponseMessage> CheckInvitation(Invitation invitation)
+        {
+            return _crudHandler.Get("Invitation", invitation.MeetingID.ToString(), invitation.UserID.ToString());
         }
     }
 }

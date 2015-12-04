@@ -11,7 +11,7 @@ using WebApiClientLibrary.RequestHadlers;
 
 namespace WebApiClientLibrary.Tests
 {
-    //[TestClass]
+    [TestClass]
     public class PlaceRequestHandlerTest
     { 
         string hostAddress = Properties.Resources.host_address;

@@ -1,4 +1,5 @@
-﻿using MeetGenerator.Model.Models;
+﻿using MeetGenerator.API.HttpActionResults;
+using MeetGenerator.Model.Models;
 using MeetGenerator.Model.Repositories;
 using MeetGenerator.Repository.SQL.Repositories;
 using NLog;
@@ -21,7 +22,7 @@ namespace MeetGenerator.API.Controllers
 
         public MeetingsController()
         {
-            String connectionString = ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString;
             _meetRepository = new MeetingRepository(connectionString);
             _userRepository = new UserRepository(connectionString);
         }
@@ -39,19 +40,19 @@ namespace MeetGenerator.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get(Guid userId)
+        public IHttpActionResult Get(Guid id)
         {
             Guid requestId = Guid.NewGuid();
 
-            Log("Received get all meetings, created by user GET HTTP-request. User ID = " + userId, requestId);
+            Log("Received get all meetings, created by user GET HTTP-request. User ID = " + id, requestId);
 
-            if (_userRepository.GetUser(userId) == null)
+            if (_userRepository.GetUser(id) == null)
             {
                 Log("Send NotFoundResult(404) response to get all meetings, created by user GET HTTP-request. User not found.", requestId);
                 return NotFound();
             }
 
-            List<Meeting> meetings = _meetRepository.GetAllMeetingsCreatedByUser(userId);
+            List<Meeting> meetings = _meetRepository.GetAllMeetingsCreatedByUser(id);
 
             if (meetings.Count == 0)
             {
@@ -63,6 +64,24 @@ namespace MeetGenerator.API.Controllers
                 requestId);
 
             return Ok(meetings);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Create(Guid MeetingID, Guid UserID)
+        {
+            return new MethodNotAllowedResult("get");
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update(Guid MeetingID, Guid UserID)
+        {
+            return new MethodNotAllowedResult("get");
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(Guid MeetingID, Guid UserID)
+        {
+            return new MethodNotAllowedResult("get");
         }
 
         void Log(String logMessage, Guid requestId)

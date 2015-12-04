@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebApiClientLibrary.Interfaces
 {
-    interface IPlaceRequestHandler
+    public  interface IPlaceRequestHandler
     {
         Task<HttpResponseMessage> Create(Place place);
         Task<HttpResponseMessage> Get(Guid id);

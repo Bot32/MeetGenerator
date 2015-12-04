@@ -70,6 +70,15 @@ namespace MeetGenerator.Tests
             };
         }
 
+        static public Invitation CreateInvitation(Meeting meeting, User user)
+        {
+            return new Invitation
+            {
+                MeetingID = meeting.Id,
+                UserID = user.Id
+            };
+        }
+
         static public IUserRepository GetIUserRepositoryMock(User getUserResult)
         {
             var mock = new Mock<IUserRepository>();

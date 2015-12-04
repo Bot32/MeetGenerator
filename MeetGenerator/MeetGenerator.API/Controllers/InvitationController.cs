@@ -26,6 +26,7 @@ namespace MeetGenerator.API.Controllers
             String connectionString = ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString;
             _meetRepository = new MeetingRepository(connectionString);
             _userRepository = new UserRepository(connectionString);
+            _invitationRepository = new InvitationRepository(connectionString);
         }
 
         public InvitationController(String connectionString)
@@ -83,9 +84,12 @@ namespace MeetGenerator.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get(Invitation invitation)
+        public IHttpActionResult Get(Guid MeetingID, Guid UserID)
         {
             Guid requestId = Guid.NewGuid();
+            Invitation invitation = new Invitation();
+            invitation.MeetingID = MeetingID;
+            invitation.UserID = UserID;
 
             Log("Received get invitation GET HTTP-request. Meeting ID = " +
                 invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
@@ -97,13 +101,16 @@ namespace MeetGenerator.API.Controllers
             }
 
             Log("Send NotFound(200) response to get invitation user to meeting GET HTTP-request.", requestId);
-            return NotFound();
+            return new NotFoundWithMessageResult("Invitation not found.");
         }
 
         [HttpDelete]
-        public IHttpActionResult Delete(Invitation invitation)
+        public IHttpActionResult Delete(Guid MeetingID, Guid UserID)
         {
             Guid requestId = Guid.NewGuid();
+            Invitation invitation = new Invitation();
+            invitation.MeetingID = MeetingID;
+            invitation.UserID = UserID;
 
             Log("Received delete invitation DELETE HTTP-request. Meeting ID = " +
                 invitation.MeetingID + ". User ID = " + invitation.UserID, requestId);
@@ -118,6 +125,12 @@ namespace MeetGenerator.API.Controllers
             Log("Send NotFoundWithMessageResult(404) response to delete invitation DELETE HTTP-request." +
                 "Message: Invitation not found.", requestId);
             return new NotFoundWithMessageResult("Invitation not found.");
+        }
+
+        [HttpPut]
+        public IHttpActionResult Update(Guid MeetingID, Guid UserID)
+        {
+            return new MethodNotAllowedResult("post,get,delete");
         }
 
         void Log(String logMessage, Guid requestId)

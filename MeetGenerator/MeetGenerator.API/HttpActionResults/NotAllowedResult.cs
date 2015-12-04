@@ -10,19 +10,19 @@ using System.Web.Http;
 
 namespace MeetGenerator.API.HttpActionResults
 {
-    public class NotFoundWithMessageResult : IHttpActionResult
+    public class MethodNotAllowedResult : IHttpActionResult
     {
-        private string errorsList;
+        private string allowedMethods;
 
-        public NotFoundWithMessageResult(string errorsList)
+        public MethodNotAllowedResult(string allowedMethods)
         {
-            this.errorsList = errorsList;
+            this.allowedMethods = allowedMethods;
         }
 
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            var response = new HttpResponseMessage(HttpStatusCode.NotFound);
-            response.Content = new StringContent(errorsList);
+            var response = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
+            response.Headers.Add("Allow", allowedMethods);
             return Task.FromResult(response);
         }
     }

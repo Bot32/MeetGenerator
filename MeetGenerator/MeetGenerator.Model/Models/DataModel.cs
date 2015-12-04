@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace MeetGenerator.Model.Models
 {
-    public class Invitation : DataModel
+    public class DataModel
     {
-        public Guid MeetingID { get; set; }
-        public Guid UserID { get; set; }
     }
 }

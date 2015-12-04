@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MeetGenerator.Model.Models
 {
-    public class Meeting
+    public class Meeting : DataModel
     {
         public Guid Id { get; set; }
         public User Owner { get; set; }

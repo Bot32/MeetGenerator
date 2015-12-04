@@ -84,7 +84,7 @@ namespace MeetGenerator.Tests.ControllerTests
             var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
-            IHttpActionResult response = invitationController.Get(CreateInvitation(meet, user));
+            IHttpActionResult response = invitationController.Get(meet.Id, user.Id);
 
             //assert
             Console.WriteLine(response);
@@ -100,11 +100,11 @@ namespace MeetGenerator.Tests.ControllerTests
             var invitationController = GetInvitationControlller(meet, meet.Owner, false);
 
             //act
-            IHttpActionResult response = invitationController.Get(CreateInvitation(meet, user));
+            IHttpActionResult response = invitationController.Get(meet.Id, user.Id);
 
             //assert
             Console.WriteLine(response);
-            Assert.IsTrue(response is NotFoundResult);
+            Assert.IsTrue(response is NotFoundWithMessageResult);
         }
 
         [TestMethod]
@@ -116,7 +116,7 @@ namespace MeetGenerator.Tests.ControllerTests
             var invitationController = GetInvitationControlller(meet, meet.Owner, true);
 
             //act
-            IHttpActionResult response = invitationController.Delete(CreateInvitation(meet, user));
+            IHttpActionResult response = invitationController.Delete(meet.Id, user.Id);
 
             //assert
             Console.WriteLine(response);
@@ -132,7 +132,7 @@ namespace MeetGenerator.Tests.ControllerTests
             var invitationController = GetInvitationControlller(meet, meet.Owner, false);
 
             //act
-            IHttpActionResult response = invitationController.Delete(CreateInvitation(meet, user));
+            IHttpActionResult response = invitationController.Delete(meet.Id, user.Id);
 
             //assert
             Console.WriteLine(response);

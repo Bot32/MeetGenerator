@@ -11,7 +11,7 @@ namespace WebApiClientLibrary.Interfaces
     public interface IUserRequestHandler
     {
         Task<HttpResponseMessage> Create(User user);
-        Task<HttpResponseMessage> Get(string userIdentificator);
+        Task<HttpResponseMessage> Get(string identificator);
         Task<HttpResponseMessage> Update(User user);
         Task<HttpResponseMessage> Delete(Guid id);
     }

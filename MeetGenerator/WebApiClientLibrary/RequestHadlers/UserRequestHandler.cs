@@ -12,51 +12,32 @@ namespace WebApiClientLibrary.RequestHadlers
 {
     public class UserRequestHandler : IUserRequestHandler
     {
-        string baseAddress;
+        CRUDGeneralRequestHandler _crudHandler;
+        const string _controller = "User";
 
         public UserRequestHandler(string baseAddress)
         {
-            this.baseAddress = baseAddress;
+            _crudHandler = new CRUDGeneralRequestHandler(baseAddress);
         }
 
-        public async Task<HttpResponseMessage> Create(User user)
+        public Task<HttpResponseMessage> Create(User user)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                return await client.PostAsJsonAsync("api/User/Create", user);
-            }
+            return _crudHandler.Create(_controller, user);
         }
 
-        public async Task<HttpResponseMessage> Get(string userIdentificator)
+        public Task<HttpResponseMessage> Get(string identificator)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                return await client.GetAsync("api/User/Get?userIdentificator=" + userIdentificator);
-            }
+            return _crudHandler.Get(_controller, identificator);
         }
 
-        public async Task<HttpResponseMessage> Update(User user)
+        public Task<HttpResponseMessage> Update(User user)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                return await client.PutAsJsonAsync("api/User/Update", user);
-            }
+            return _crudHandler.Update(_controller, user);
         }
 
-        public async Task<HttpResponseMessage> Delete(Guid id)
+        public Task<HttpResponseMessage> Delete(Guid id)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseAddress);;
-                return await client.DeleteAsync("api/User/Delete?id=" + id);
-            }
+            return _crudHandler.Delete(_controller, id.ToString());
         }
     }
 }

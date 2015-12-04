@@ -12,7 +12,7 @@ using MeetGenerator.Tests;
 
 namespace WebApiClientLibrary.Tests
 {
-    //[TestClass]
+    [TestClass]
     public class UserRequestHandlerTest
     {
         string hostAddress = Properties.Resources.host_address;
