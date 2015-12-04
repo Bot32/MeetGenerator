@@ -70,18 +70,18 @@ namespace MeetGenerator.API.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get(String userIdentificator)
+        public IHttpActionResult Get(String id)
         {
             Guid requestId = Guid.NewGuid();
             Guid userId;
             User user;
 
-            Log("Received get user GET HTTP-request. Attached user identificator = " + userIdentificator, requestId);
+            Log("Received get user GET HTTP-request. Attached user identificator = " + id, requestId);
 
-            if (Guid.TryParse(userIdentificator, out userId))
+            if (Guid.TryParse(id, out userId))
                 user = _userRepository.GetUser(userId);
             else
-                user = _userRepository.GetUser(userIdentificator);
+                user = _userRepository.GetUser(id);
 
             if (user == null)
             {

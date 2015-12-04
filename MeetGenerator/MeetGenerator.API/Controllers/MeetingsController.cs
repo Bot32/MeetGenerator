@@ -67,19 +67,19 @@ namespace MeetGenerator.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Create(Guid MeetingID, Guid UserID)
+        public IHttpActionResult Create()
         {
             return new MethodNotAllowedResult("get");
         }
 
         [HttpPut]
-        public IHttpActionResult Update(Guid MeetingID, Guid UserID)
+        public IHttpActionResult Update()
         {
             return new MethodNotAllowedResult("get");
         }
 
         [HttpDelete]
-        public IHttpActionResult Delete(Guid MeetingID, Guid UserID)
+        public IHttpActionResult Delete()
         {
             return new MethodNotAllowedResult("get");
         }

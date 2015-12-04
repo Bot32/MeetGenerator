@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WebApiClientLibrary.Interfaces;
 using WebApiClientLibrary.RequestHadlers;
@@ -16,6 +17,7 @@ namespace MeetGenWPFClient.ViewModel
     {
         //OnPropertyChanged(new PropertyChangedEventArgs("HostAddress"));
         string _hostAddress;
+        TextBox box = new TextBox();
 
         IUserRequestHandler _userRequestHandler;
         IPlaceRequestHandler _placeRequestHandler;
@@ -27,7 +29,7 @@ namespace MeetGenWPFClient.ViewModel
 
         public MainViewModel()
         {
-            _hostAddress = "http://localhost:61689/";
+            _hostAddress = "http://MeetGen.somee.com/MeetGenApp/";
 
             InitialaizeHandlers();
             SetStartData();
@@ -92,7 +94,9 @@ namespace MeetGenWPFClient.ViewModel
                 return new DelegateCommand(async () =>
                 {
                     HttpResponseMessage response = await _userRequestHandler.Create(User);
-                    if (response.IsSuccessStatusCode) User = await response.Content.ReadAsAsync<User>();
+                    if (response.IsSuccessStatusCode)
+                    User = await response.Content.ReadAsAsync<User>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -104,6 +108,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _userRequestHandler.Get(User.Id.ToString());
                     if (response.IsSuccessStatusCode) User = await response.Content.ReadAsAsync<User>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -115,6 +120,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _userRequestHandler.Get(User.Email);
                     if (response.IsSuccessStatusCode) User = await response.Content.ReadAsAsync<User>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -126,6 +132,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _userRequestHandler.Update(User);
                     if (response.IsSuccessStatusCode) User = await response.Content.ReadAsAsync<User>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -137,6 +144,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _userRequestHandler.Delete(User.Id);
                     if (response.IsSuccessStatusCode) User = new User();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -149,6 +157,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _placeRequestHandler.Create(Place);
                     if (response.IsSuccessStatusCode) Place = await response.Content.ReadAsAsync<Place>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -160,6 +169,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _placeRequestHandler.Get(Place.Id);
                     if (response.IsSuccessStatusCode) Place = await response.Content.ReadAsAsync<Place>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -171,6 +181,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _placeRequestHandler.Update(Place);
                     if (response.IsSuccessStatusCode) Place = await response.Content.ReadAsAsync<Place>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -182,6 +193,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _placeRequestHandler.Delete(Place.Id);
                     if (response.IsSuccessStatusCode) Place = new Place();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -194,6 +206,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _meetingRequestHandler.Create(Meeting);
                     if (response.IsSuccessStatusCode) Meeting = await response.Content.ReadAsAsync<Meeting>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -205,6 +218,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _meetingRequestHandler.Get(Meeting.Id);
                     if (response.IsSuccessStatusCode) Meeting = await response.Content.ReadAsAsync<Meeting>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -216,6 +230,7 @@ namespace MeetGenWPFClient.ViewModel
                 {
                     HttpResponseMessage response = await _meetingRequestHandler.Update(Meeting);
                     if (response.IsSuccessStatusCode) Meeting = await response.Content.ReadAsAsync<Meeting>();
+                    WriteToConsole(response);
                 });
             }
         }
@@ -231,6 +246,7 @@ namespace MeetGenWPFClient.ViewModel
                         Owner = new User(),
                         Place = new Place()
                     };
+                    WriteToConsole(response);
                 });
             }
         }
@@ -293,6 +309,19 @@ namespace MeetGenWPFClient.ViewModel
             }
         }
 
+        public TextBox Box
+        {
+            get
+            {
+                return box;
+            }
+
+            set
+            {
+                box = value;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(PropertyChangedEventArgs e)
         {
@@ -328,6 +357,12 @@ namespace MeetGenWPFClient.ViewModel
                 Place = new Place(),
                 InvitedPeople = new Dictionary<Guid, User>()
             };
+        }
+
+        async void WriteToConsole(HttpResponseMessage response)
+        {
+            Box.Text += response.StatusCode + "\n";
+            Box.Text += await response.Content.ReadAsStringAsync() + "\n";
         }
     }
 
