@@ -61,7 +61,7 @@ namespace WebApiClientLibrary.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на http://localhost:61689/.
+        ///   Ищет локализованную строку, похожую на http://meetgen.azurewebsites.net/.
         /// </summary>
         internal static string host_address {
             get {

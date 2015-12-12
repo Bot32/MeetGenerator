@@ -97,8 +97,9 @@ namespace WebApiClientLibrary.Tests
             User resultUser = await response.Content.ReadAsAsync<User>();
 
             HttpResponseMessage resultResponse = await userHandler.Update(resultUser);
-            
+
             //assert
+            Console.WriteLine(resultResponse.StatusCode);
             Assert.IsTrue(resultResponse.IsSuccessStatusCode);
         }
 

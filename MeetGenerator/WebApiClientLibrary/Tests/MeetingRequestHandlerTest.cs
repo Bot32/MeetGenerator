@@ -145,6 +145,11 @@ namespace WebApiClientLibrary.Tests
 
             //assert
             TestDataHelper.PrintMeetingInfo(resultMeet);
+            Console.WriteLine(response1.StatusCode);
+            Console.WriteLine(response2.StatusCode);
+            Console.WriteLine(response3.StatusCode);
+            Console.WriteLine(response4.StatusCode);
+            Console.WriteLine(resultResponse.StatusCode);
             Assert.IsTrue(resultResponse.IsSuccessStatusCode);
         }
 

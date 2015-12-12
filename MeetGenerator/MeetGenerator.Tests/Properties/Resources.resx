@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConnectionString" xml:space="preserve">
+    <value>Data Source=u452146.mssql.masterhost.ru;Initial Catalog=u452146;Persist Security Info=True;User ID=u452146;Password=solingo5ho9</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>workstation id=MeetGenDB.mssql.somee.com;packet size=4096;user id=Bot32_SQLLogin_1;pwd=6e6nysxs9b;data source=MeetGenDB.mssql.somee.com;persist security info=False;initial catalog=MeetGenDB</value>
+  </data>
+  <data name="String2" xml:space="preserve">
     <value>Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True</value>
   </data>
 </root>

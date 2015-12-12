@@ -61,11 +61,29 @@ namespace MeetGenerator.Tests.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True.
+        ///   Ищет локализованную строку, похожую на Data Source=u452146.mssql.masterhost.ru;Initial Catalog=u452146;Persist Security Info=True;User ID=u452146;Password=solingo5ho9.
         /// </summary>
         internal static string ConnectionString {
             get {
                 return ResourceManager.GetString("ConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на workstation id=MeetGenDB.mssql.somee.com;packet size=4096;user id=Bot32_SQLLogin_1;pwd=6e6nysxs9b;data source=MeetGenDB.mssql.somee.com;persist security info=False;initial catalog=MeetGenDB.
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Data Source=KONSTANTIN-PC;Initial Catalog=MeetGenDB;Integrated Security=True.
+        /// </summary>
+        internal static string String2 {
+            get {
+                return ResourceManager.GetString("String2", resourceCulture);
             }
         }
     }
