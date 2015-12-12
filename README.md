@@ -1,3 +1,4 @@
-# MeetGenerator
+# MeetGenerator переехал на Azure
+REST API: http://meetgen.azurewebsites.net/api/"controllerName"
 
-http://meetgen.somee.com/MeetGenApp/
+AngularJS WebApp : http://meetgenangular.azurewebsites.net/
