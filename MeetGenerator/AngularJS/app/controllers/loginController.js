@@ -44,6 +44,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
                 authService.externalAuthData = {
                     provider: fragment.provider,
                     userName: fragment.external_user_name,
+                    email: fragment.email,
                     externalAccessToken: fragment.external_access_token
                 };
 

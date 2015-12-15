@@ -68,8 +68,9 @@ namespace AngularJSAuthentication.API
             {
                 AppId = "1665257967048891",
                 AppSecret = "c94ed31993c66d759fda35794de464da",
-                Provider = new FacebookAuthProvider()
+                Provider = new FacebookAuthProvider(),             
             };
+            facebookAuthOptions.Scope.Add("email");
             app.UseFacebookAuthentication(facebookAuthOptions);
 
         }

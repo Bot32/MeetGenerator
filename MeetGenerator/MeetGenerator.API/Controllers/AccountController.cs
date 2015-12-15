@@ -1,5 +1,7 @@
 ﻿using AngularJSAuthentication.API.Models;
 using AngularJSAuthentication.API.Results;
+using MeetGenerator.Model.Repositories;
+using MeetGenerator.Repository.SQL.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -8,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,6 +25,7 @@ namespace AngularJSAuthentication.API.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
+        private IUserRepository _userRepo = null;
 
         private IAuthenticationManager Authentication
         {
@@ -31,6 +35,8 @@ namespace AngularJSAuthentication.API.Controllers
         public AccountController()
         {
             _repo = new AuthRepository();
+            _userRepo = new UserRepository
+                (ConfigurationManager.ConnectionStrings["MeetGenDB"].ConnectionString);
         }
 
         // POST api/Account/Register
@@ -52,7 +58,7 @@ namespace AngularJSAuthentication.API.Controllers
                  return errorResult;
              }
 
-             return Ok();
+            return Ok();
         }
 
         // GET api/Account/ExternalLogin
@@ -135,7 +141,7 @@ namespace AngularJSAuthentication.API.Controllers
                 return BadRequest("External user is already registered");
             }
 
-            user = new IdentityUser() { UserName = model.UserName };
+            user = new IdentityUser() { UserName = model.UserName, Email = model.Email };
 
             IdentityResult result = await _repo.CreateAsync(user);
             if (!result.Succeeded)
@@ -186,6 +192,11 @@ namespace AngularJSAuthentication.API.Controllers
             {
                 return BadRequest("External user is not registered");
             }
+
+            MeetGenerator.Model.Models.User restUser = new MeetGenerator.Model.Models.User
+            {
+                FirstName = user.UserName,
+            };
 
             //generate access token response
             var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);

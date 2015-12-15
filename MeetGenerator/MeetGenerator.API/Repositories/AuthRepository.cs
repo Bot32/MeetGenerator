@@ -27,14 +27,18 @@ namespace AngularJSAuthentication.API
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            IdentityUser user = new IdentityUser()
             {
                 UserName = userModel.UserName
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var addUserResult = await _userManager.CreateAsync(user, userModel.Password);
 
-            return result;
+            //if (addUserResult.Succeeded)
+            //{
+            //    return await SetEmail(user.Id, userModel.Email);
+            //}
+            return addUserResult;
         }
 
         public async Task<IdentityUser> FindUser(string userName, string password)
@@ -115,6 +119,11 @@ namespace AngularJSAuthentication.API
             var result = await _userManager.AddLoginAsync(userId, login);
 
             return result;
+        }
+
+        public async Task<IdentityResult> SetEmail(string userId, string email)
+        {
+            return await _userManager.SetEmailAsync(userId, email);
         }
 
         public void Dispose()

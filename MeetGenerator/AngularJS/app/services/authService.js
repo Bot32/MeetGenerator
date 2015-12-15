@@ -13,6 +13,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     var _externalAuthData = {
         provider: "",
         userName: "",
+        email: "",
         externalAccessToken: ""
     };
 

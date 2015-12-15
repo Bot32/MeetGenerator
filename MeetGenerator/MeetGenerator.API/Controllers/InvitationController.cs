@@ -47,6 +47,8 @@ namespace MeetGenerator.API.Controllers
         [HttpPost]
         public IHttpActionResult Create(Invitation invitation)
         {
+            
+
             Guid requestId = Guid.NewGuid();
 
             Log("Received create invitation user to meeting POST HTTP-request. Meeting ID = " +

@@ -27,10 +27,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-show="authentication.isAuth"><a href="#">Welcome {{authentication.userName}}</a></li>
                     <li data-ng-show="authentication.isAuth"><a href="#/orders">My Orders</a></li>
-                    <li data-ng-show="authentication.isAuth"><a href="#/refresh">Refresh Token</a></li>
                     <li data-ng-show="authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a href="#/login">Login</a></li>
+                    <li data-ng-hide="authentication.isAuth"><a href="#/signup">Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -55,10 +54,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="text-muted">GitHub: <a target="_blank" href="https://github.com/Bot32/MeetGenerator">MeetGenerator</a></p>
+                    <p class="text-muted">Created by Mazur KOnstantin for DevShool</p>
                 </div>
                 <div class="col-md-6">
-                    <p class="text-muted"></p>
+                    <p class="text-muted">GitHub: <a href="https://github.com/Bot32/MeetGenerator">MeetGenerator</a></p>
                 </div>
             </div>
         </div>

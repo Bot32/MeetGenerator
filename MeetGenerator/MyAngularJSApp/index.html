@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html ng-app="AngularMeetGenApp">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="scripts/angular-local-storage.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/services/userService.js"></script>
+    <script src="app/controllers/userController.js"></script>
+    <link href="content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/css/site.css" rel="stylesheet" />
+    <link href="content/css/loading-bar.css" rel="stylesheet" />
+    <link href="content/css/social-buttons.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </button>
+                <a class="navbar-brand" href="#/home">Home</a>
+            </div>
+            <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#/home">Home</a></li>
+                    <li><a href="#/users">Users</a></li>
+                    <li><a href="#/places">Places</a></li>
+                    <li><a href="#/meetings">Meetings</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div ng-view>
+           
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-muted">Created by Mazur Konstantin for DevShool</p>
+                </div>
+                <div class="col-md-2 col-md-offset-2">
+                    <p class="text-muted">GitHub: <a href="https://github.com/Bot32/MeetGenerator">MeetGenerator</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load custom filters -->
+    <!-- Load custom directives -->
+</body>
+</html>

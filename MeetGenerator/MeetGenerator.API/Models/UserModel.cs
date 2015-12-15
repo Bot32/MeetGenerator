@@ -12,6 +12,17 @@ namespace AngularJSAuthentication.API.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[Display(Name = "Email")]
+        //public string Email { get; set; }
+
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[Display(Name = "Confirm email")]
+        //[Compare("Email", ErrorMessage = "The Email and confirmation Email do not match.")]
+        //public string ConfirmEmail { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

@@ -21,11 +21,13 @@ namespace AngularJSAuthentication.API.Models
         public string UserName { get; set; }
 
         [Required]
+        public string Email { get; set; }
+
+        [Required]
         public string Provider { get; set; }
 
         [Required]
         public string ExternalAccessToken { get; set; }
-
     }
 
     public class ParsedExternalAccessToken

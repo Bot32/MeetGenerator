@@ -6,6 +6,7 @@ app.controller('associateController', ['$scope', '$location','$timeout','authSer
 
     $scope.registerData = {
         userName: authService.externalAuthData.userName,
+        email: authService.externalAuthData.email,
         provider: authService.externalAuthData.provider,
         externalAccessToken: authService.externalAuthData.externalAccessToken
     };
@@ -34,5 +35,4 @@ app.controller('associateController', ['$scope', '$location','$timeout','authSer
             $location.path('/orders');
         }, 2000);
     }
-
 }]);

@@ -1,0 +1,38 @@
+﻿<div style="padding-top:15px">
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-md-3 col-md-offset-2">
+                <h2>User info</h2>
+                <div class="form-group" >
+                    <label class="control-label">Id</label>
+                    <input class="form-control" placeholder="id" ng-model="user.id" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">First name</label>
+                    <input class="form-control" placeholder="first name" ng-model="user.firstName"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Last name</label>
+                    <input class="form-control" placeholder="last name" ng-model="user.lastName"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input class="form-control" placeholder="email" ng-model="user.email"/>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-3 col-md-offset-1">
+            <h2>Actions</h2>
+            <div style="padding-top:15px">
+                <button type="button" class="btn btn-primary btn-block" ng-click="userCtrl.postUser()">Create</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="userCtrl.getById()">Get by ID</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="userCtrl.getByEmail()">Get by Email</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="userCtrl.updateUser()">Update</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="userCtrl.deleteUser()">Delete</button>     
+            </div>  
+        </div>
+    </div>
+</div>
+
+  <style>
+  </style>  
