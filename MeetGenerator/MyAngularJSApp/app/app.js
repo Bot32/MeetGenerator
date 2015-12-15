@@ -13,6 +13,7 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/places", {
+        controller: "placeController as placeCtrl",
         templateUrl: "/app/views/places.html"
     });
 
