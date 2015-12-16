@@ -5,18 +5,29 @@ app.controller('invitationController', ['$scope', 'invitationService',
         $scope.meeting = invitationService.currentMeeting;
         $scope.selectedUser = {};
 
-        this.getMeeting = function () {
-            invitationService.getMeeting($scope.meeting.id).then(function (result) {
-                $scope.updateMeetingInfo(result.data);
-                console.log(result);
-            }, function (error) {
-                alert(error.data.message);
-            });
-        }
-
         this.postInvitation = function () {
             invitationService.postInvitation($scope.buildInvitationObject($scope.meeting.id, $scope.selectedUser.id))
                 .then(function (result) {
+                    console.log(result);
+                    $scope.getMeeting();
+                }, function (error) {
+                    alert(error.data.message);
+                });
+        }
+
+        this.deleteInvitation = function () {
+            invitationService.deleteInvitation($scope.buildInvitationObject($scope.meeting.id, $scope.selectedUser.id))
+                .then(function (result) {
+                    console.log(result);
+                    $scope.getMeeting();
+                }, function (error) {
+                    alert(error.data.message);
+                });
+        }
+
+        $scope.getMeeting = function () {
+            invitationService.getMeeting($scope.meeting.id).then(function (result) {
+                $scope.updateMeetingInfo(result.data);
                 console.log(result);
             }, function (error) {
                 alert(error.data.message);
@@ -26,15 +37,6 @@ app.controller('invitationController', ['$scope', 'invitationService',
         this.postInvitationAndUpdate = function () {
             this.postInvitation();
             this.getMeeting();
-        }
-
-        this.deleteInvitation = function () {
-            invitationService.deleteInvitation($scope.buildInvitationObject($scope.meeting.id, $scope.selectedUser.id))
-                .then(function (result) {
-                console.log(result);
-            }, function (error) {
-                alert(error.data.message);
-            });
         }
 
         this.deleteInvitationAndUpdate = function () {

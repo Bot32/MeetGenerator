@@ -48,6 +48,8 @@ namespace MeetGenerator.API.Controllers
         [HttpPost]
         public IHttpActionResult Create(Meeting meeting)
         {
+            RequestContext.Principal.Identity.
+
             Guid requestId = Guid.NewGuid();
 
             Log("Received create meeting POST HTTP-request.", meeting, requestId);
