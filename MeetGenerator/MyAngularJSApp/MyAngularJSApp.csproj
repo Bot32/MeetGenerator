@@ -67,14 +67,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controllers\homeController.js" />
+    <Content Include="app\controllers\invitationController.js" />
     <Content Include="app\controllers\meetingController.js" />
     <Content Include="app\controllers\placeController.js" />
     <Content Include="app\controllers\userController.js" />
     <Content Include="app\directives\placeForm.js" />
     <Content Include="app\directives\userForm.js" />
+    <Content Include="app\services\invitationService.js" />
     <Content Include="app\services\meetingService.js" />
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\userService.js" />
+    <Content Include="app\views\invitations.html" />
     <Content Include="app\views\placeForm.html" />
     <Content Include="app\views\userForm.html" />
     <Content Include="packages.config" />

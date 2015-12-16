@@ -22,6 +22,11 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/meetings.html"
     });
 
+    $routeProvider.when("/invitations", {
+        controller: "invitationController as invitationCtrl",
+        templateUrl: "/app/views/invitations.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 

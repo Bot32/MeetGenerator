@@ -1,0 +1,36 @@
+﻿<div style="padding-top:15px">
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-md-3 col-md-offset-2">
+                <h2>Meeting info</h2>
+                <div class="form-group">
+                    <label>Meeting ID</label>
+                    <input class="form-control" placeholder="id" ng-model="meeting.id" />
+                    <button type="button" class="btn btn-primary form-control" style="margin-top:5px" ng-click="invitationCtrl.getMeeting()">Get Meeting</button>
+                </div>
+               
+                <div class="list-group form-group" style="margin-top:5px">
+                    <a class="list-group-item" >
+                        <h3 class="list-group-item-heading">Invited people:</h3>
+                    </a>
+                    <a class="list-group-item" ng-repeat="user in meeting.invitedPeople" ng-click="invitationCtrl.selectUser(user)">
+                        <div >
+                            <h5 class="list-group-item-text">{{user.id}}</h5>
+                            <p class="list-group-item-text">{{user.email}}</p>
+                        </div>
+                    </a>
+                    <button type="button" class="btn btn-primary form-control" style="margin-top:5px" ng-click="invitationCtrl.clearMeetingInfo()">Clear</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-3 col-md-offset-1">
+            <h2>Actions</h2>
+            <div class="form-group">
+                <label class="control-label">Slected User ID</label>
+                <input class="form-control" placeholder="id" ng-model="selectedUser.id" style="margin-bottom:5px"/>
+                <button type="button" class="btn btn-primary btn-block" ng-click=" invitationCtrl.postInvitationAndUpdate();">Invite</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click=" invitationCtrl.deleteInvitationAndUpdate();">Cancel invitation</button>
+            </div>
+        </div>
+    </div>
+</div>

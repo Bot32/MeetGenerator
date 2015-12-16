@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn form-control" style="  overflow: hidden; overflow: ellipsis;" data-toggle="collapse" data-target="#placeCollapse">
+                    <button type="button" class="btn form-control" style="  overflow: hidden;" data-toggle="collapse" data-target="#placeCollapse">
                         <span class="glyphicon glyphicon-chevron-down"></span> Place: {{meeting.place.address}} 
                     </button>
                     <div id="placeCollapse" class="collapse">
@@ -40,7 +40,7 @@
         </form>
         <div class="col-md-3 col-md-offset-1">
             <h2>Actions</h2>
-            <div style="padding-top:10px">
+            <div style="padding-top:25px">
                 <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.postMeeting()">Create</button>
                 <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.getMeeting()">Get</button>
                 <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.updateMeeting()">Update</button>
