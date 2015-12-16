@@ -1,5 +1,7 @@
 ﻿'use strict';
-app.controller('placeController', ['$scope', 'placeService', function ($scope, placeService) {
+app.controller('placeController', ['$scope', 'placeService', 'meetingService',
+    function ($scope, placeService, meetingService) {
+
     $scope.place = placeService.currentPlace;
 
     this.getPlace = function () {
@@ -40,5 +42,14 @@ app.controller('placeController', ['$scope', 'placeService', function ($scope, p
         }, function (error) {
             alert(error.data.message);
         });
+    }
+
+    this.toMeeting = function () {
+        meetingService.currentMeeting.place = jQuery.extend({}, $scope.place);
+    }
+
+    this.clearPlaceInfo = function () {
+        $scope.place = {};
+        placeService.currentPlace = {};
     }
 }]);

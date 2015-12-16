@@ -1,3 +1,51 @@
-﻿<div>
-    <h1>Meetings page</h1>
+﻿<div style="padding-top:15px">
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="col-md-3 col-md-offset-2">
+                <h2>Meeting info</h2>
+                <div class="form-group">
+                    <label class="control-label">Id</label>
+                    <input class="form-control" placeholder="id" ng-model="meeting.id" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Title</label>
+                    <input class="form-control" placeholder="Address" ng-model="meeting.title" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <input class="form-control" placeholder="Description" ng-model="meeting.description" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Date</label>
+                    <input type="date" class="form-control" ng-model="meeting.date" />
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn form-control pull-left" data-toggle="collapse" data-target="#userCollapse">
+                        <span class="glyphicon glyphicon-chevron-down"></span> User: {{meeting.owner.email}} 
+                    </button>
+                    <div id="userCollapse" class="collapse"  style="padding-top:35px">
+                        <user-form></user-form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn form-control" style="  overflow: hidden; overflow: ellipsis;" data-toggle="collapse" data-target="#placeCollapse">
+                        <span class="glyphicon glyphicon-chevron-down"></span> Place: {{meeting.place.address}} 
+                    </button>
+                    <div id="placeCollapse" class="collapse">
+                        <place-form></place-form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.clearMeetingInfo()">Clear</button>
+             </div>
+        </form>
+        <div class="col-md-3 col-md-offset-1">
+            <h2>Actions</h2>
+            <div style="padding-top:10px">
+                <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.postMeeting()">Create</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.getMeeting()">Get</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.updateMeeting()">Update</button>
+                <button type="button" class="btn btn-primary btn-block" ng-click="meetingCtrl.deleteMeeting()">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

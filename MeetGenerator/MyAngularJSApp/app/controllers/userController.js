@@ -1,5 +1,6 @@
 ﻿'use strict';
-app.controller('userController', ['$scope', 'userService', function ($scope, userService) {
+app.controller('userController', ['$scope', 'userService', 'meetingService',
+    function ($scope, userService, meetingService) {
     $scope.user = userService.currentUser;
 
     this.getByEmail = function () {
@@ -50,5 +51,14 @@ app.controller('userController', ['$scope', 'userService', function ($scope, use
         }, function (error) {
             alert(error.data.message);
         });
+    }
+
+    this.toMeeting = function () {
+        meetingService.currentMeeting.owner = jQuery.extend({}, $scope.user);
+    }
+
+    this.clearUserInfo = function () {
+        $scope.user = {};
+        userService.currentUser = {};
     }
 }]);

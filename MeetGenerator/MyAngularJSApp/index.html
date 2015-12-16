@@ -3,13 +3,22 @@
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="app/app.js"></script>
     <script src="app/services/userService.js"></script>
     <script src="app/services/placeService.js"></script>
+    <script src="app/services/meetingService.js"></script>
     <script src="app/controllers/userController.js"></script>
     <script src="app/controllers/placeController.js"></script>
-    <link href="content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="app/controllers/meetingController.js"></script>
+    <script src="app/directives/userForm.js"></script>
+    <script src="app/directives/placeForm.js"></script>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="content/css/site.css" rel="stylesheet" />
     <link href="content/css/loading-bar.css" rel="stylesheet" />
     <link href="content/css/social-buttons.css" rel="stylesheet" />
@@ -45,7 +54,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="text-muted">Created by Mazur Konstantin for DevShool</p>
+                    <p class="text-muted">Created by Mazur Konstantin for DevSchool</p>
                 </div>
                 <div class="col-md-2 col-md-offset-2">
                     <p class="text-muted">GitHub: <a href="https://github.com/Bot32/MeetGenerator">MeetGenerator</a></p>

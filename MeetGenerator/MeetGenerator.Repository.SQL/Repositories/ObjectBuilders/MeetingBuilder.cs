@@ -37,7 +37,7 @@ namespace MeetGenerator.Repository.SQL.Repositories.ObjectBuilders
                 {
                     Id = reader.GetGuid(reader.GetOrdinal("PlaceID")),
                     Address = reader.GetString(reader.GetOrdinal("Address")),
-                    Description = reader.GetString(reader.GetOrdinal("Description"))
+                    Description = reader.GetString(reader.GetOrdinal("pDescription"))
                 };
                 meeting.InvitedPeople = new Dictionary<Guid, User>();
             }

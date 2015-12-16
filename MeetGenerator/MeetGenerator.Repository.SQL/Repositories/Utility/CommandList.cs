@@ -118,7 +118,7 @@ namespace MeetGenerator.Repository.SQL.Repositories.Utility
 
             Log("get meeting");
 
-            command.CommandText = "select m.id as MeetingId, m.Date, m.Title, m.Description, m.PlaceID, p.Address, p.Description, m.OwnerID, u.FirstName, u.LastName, u.Email " +
+            command.CommandText = "select m.id as MeetingId, m.Date, m.Title, m.Description, m.PlaceID, p.Address, p.Description as pDescription, m.OwnerID, u.FirstName, u.LastName, u.Email " +
                                   "from [dbo].[Meeting] m " +
                                   "join [dbo].[User] u on u.ID = m.OwnerID " +
                                   "join [dbo].[Place] p on m.PlaceID = p.ID " +

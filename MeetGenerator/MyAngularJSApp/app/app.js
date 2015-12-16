@@ -18,6 +18,7 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/meetings", {
+        controller: "meetingController as meetingCtrl",
         templateUrl: "/app/views/meetings.html"
     });
 
@@ -27,4 +28,10 @@ app.config(function ($routeProvider) {
 var serviceBase = 'http://meetgen.azurewebsites.net/';
 app.constant('ngSettings', {
     apiServiceBaseUri: serviceBase,
+});
+
+app.run(function ($rootScope) {
+    $rootScope.$on('$routeChangeStart', function (event, current, previous, reject) {
+        $rootScope.updateMeetingInfo;
+    });
 });

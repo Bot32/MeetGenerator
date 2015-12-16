@@ -107,8 +107,8 @@ namespace MeetGenerator.Repository.SQL.Repositories
         {
             if (meeting != null)
             {
-                _logger.Debug("{0}: ID = {1}, Title = {2}, Owner.ID = {3}, Owner.Email = {4}, Place.ID = {5}, Place.Address = {6}.",
-                    logMessage, meeting.Id, meeting.Title, meeting.Owner.Id, meeting.Owner.Email, meeting.Place.Id, meeting.Place.Address);
+                _logger.Debug("{0}: ID = {1}, Title = {2}, Owner.ID = {3}, Owner.Email = {4}, Place.ID = {5}, Place.Address = {6}, Place.Description = {7}.",
+                    logMessage, meeting.Id, meeting.Title, meeting.Owner.Id, meeting.Owner.Email, meeting.Place.Id, meeting.Place.Address, meeting.Place.Description);
             }
             else
             {

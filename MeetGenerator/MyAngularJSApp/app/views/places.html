@@ -1,22 +1,15 @@
 ﻿<div style="padding-top:15px">
     <div class="row">
-        <form class="form-horizontal">
-            <div class="col-md-3 col-md-offset-2">
-                <h2>Place info</h2>
-                <div class="form-group">
-                    <label class="control-label">Id</label>
-                    <input class="form-control" placeholder="id" ng-model="place.id" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Address</label>
-                    <input class="form-control" placeholder="Address" ng-model="place.address" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Description</label>
-                    <input class="form-control" placeholder="Description" ng-model="place.description" />
-                </div>
-            </div>
-        </form>
+        <div class="col-md-3 col-md-offset-2">
+            <h2>Place info</h2>
+            <place-form></place-form>
+            <button type="button" class="btn btn-primary btn-block" ng-click="placeCtrl.clearPlaceInfo()">
+                Clear
+            </button>
+            <button type="button" class="btn btn-primary btn-block" ng-click="placeCtrl.toMeeting()">
+                Send Place object to Meeting Tab
+            </button>
+        </div>
         <div class="col-md-3 col-md-offset-1">
             <h2>Actions</h2>
             <div style="padding-top:10px">
