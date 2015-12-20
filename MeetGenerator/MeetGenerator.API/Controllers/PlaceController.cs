@@ -13,6 +13,7 @@ using System.Web.Http.Results;
 
 namespace MeetGenerator.API.Controllers
 {
+    [Authorize]
     public class PlaceController : ApiController
     {
         IPlaceRepository _placeRepository;

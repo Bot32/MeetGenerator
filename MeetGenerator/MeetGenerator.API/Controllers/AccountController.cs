@@ -141,7 +141,9 @@ namespace AngularJSAuthentication.API.Controllers
                 return BadRequest("External user is already registered");
             }
 
-            user = new IdentityUser() { UserName = model.UserName, Email = model.Email };
+            user = new IdentityUser() { UserName = model.UserName
+                //, Email = model.Email
+            };
 
             IdentityResult result = await _repo.CreateAsync(user);
             if (!result.Succeeded)
@@ -272,18 +274,6 @@ namespace AngularJSAuthentication.API.Controllers
                 return "client_Id is required";
             }
 
-            var client = _repo.FindClient(clientId);
-
-            if (client == null)
-            {
-                return string.Format("Client_id '{0}' is not registered in the system.", clientId);
-            }
-
-            if (false)//!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
-            {
-                return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
-            }
-
             redirectUriOutput = redirectUri.AbsoluteUri;
 
             return string.Empty;
@@ -401,6 +391,7 @@ namespace AngularJSAuthentication.API.Controllers
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }
             public string UserName { get; set; }
+            public string Email { get; set; }
             public string ExternalAccessToken { get; set; }
 
             public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
@@ -427,6 +418,7 @@ namespace AngularJSAuthentication.API.Controllers
                     LoginProvider = providerKeyClaim.Issuer,
                     ProviderKey = providerKeyClaim.Value,
                     UserName = identity.FindFirstValue(ClaimTypes.Name),
+                    Email = identity.FindFirstValue(ClaimTypes.Email),
                     ExternalAccessToken = identity.FindFirstValue("ExternalAccessToken"),
                 };
             }

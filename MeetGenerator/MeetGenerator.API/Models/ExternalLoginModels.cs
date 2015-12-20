@@ -20,8 +20,8 @@ namespace AngularJSAuthentication.API.Models
         [Required]
         public string UserName { get; set; }
 
-        [Required]
-        public string Email { get; set; }
+        //[Required]
+        //public string Email { get; set; }
 
         [Required]
         public string Provider { get; set; }

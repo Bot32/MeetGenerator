@@ -6,20 +6,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     
-
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="app/app.js"></script>
+
     <script src="app/services/userService.js"></script>
     <script src="app/services/placeService.js"></script>
     <script src="app/services/meetingService.js"></script>
     <script src="app/services/invitationService.js"></script>
+    <script src="app/services/authService.js"></script>
+    <script src="app/services/authInterceptorService.js"></script>
+
     <script src="app/controllers/userController.js"></script>
     <script src="app/controllers/placeController.js"></script>
     <script src="app/controllers/meetingController.js"></script>
     <script src="app/controllers/invitationController.js"></script>
+    <script src="app/controllers/signupController.js"></script>
+    <script src="app/controllers/loginController.js"></script>
+    <script src="app/controllers/indexController.js"></script>
+    <script src="app/controllers/associateController.js"></script>
+
     <script src="app/directives/userForm.js"></script>
     <script src="app/directives/placeForm.js"></script>
-
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="content/css/site.css" rel="stylesheet" />
@@ -28,28 +35,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="indexController">
         <div class="container">
             <div class="navbar-header">
                 <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">Home</a>
+                <a ng-show="authData.isAuth" class="navbar-brand" href="#">Welcome {{authData.userName}}!</a>
+                <a ng-hide="authData.isAuth" class="navbar-brand" href="#/home">Home</a>
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#/users">Users</a></li>
-                    <li><a href="#/places">Places</a></li>
-                    <li><a href="#/meetings">Meetings</a></li>
-                    <li><a href="#/invitations">Invitations</a></li>
+                    <li ng-hide="authData.isAuth"><a href="#/login">Login</a></li>
+                    <li ng-hide="authData.isAuth"><a href="#/signup">Signup</a></li>
+                    <li ng-show="authData.isAuth"><a href="#/users">Users</a></li>
+                    <li ng-show="authData.isAuth"><a href="#/places">Places</a></li>
+                    <li ng-show="authData.isAuth"><a href="#/meetings">Meetings</a></li>
+                    <li ng-show="authData.isAuth"><a href="#/invitations">Invitations</a></li>
+                    <li ng-show="authData.isAuth"><a href="#/home" data-ng-click="logOut()">Logout</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div>
-        <div ng-view>
-           
+        <div ng-view>   
         </div>
     </div>
 

@@ -169,9 +169,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\MeetingsController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlaceController.cs" />
-    <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MeetingController.cs" />
     <Compile Include="DataValidators\MeetDataValidator.cs" />
@@ -184,7 +182,6 @@
     <Compile Include="Helper.cs" />
     <Compile Include="HttpActionResults\NotAllowedResult.cs" />
     <Compile Include="HttpActionResults\NotFoundWithMessageResult.cs" />
-    <Compile Include="Migration\Configuration.cs" />
     <Compile Include="Models\ApplicationTypes.cs" />
     <Compile Include="Models\ExternalLoginModels.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -192,7 +189,6 @@
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\GoogleAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
-    <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="StartUp.cs" />
@@ -219,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Migration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MeetGenerator.Model\MeetGenerator.Model.csproj">

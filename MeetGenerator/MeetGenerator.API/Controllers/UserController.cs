@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace MeetGenerator.API.Controllers
 {
+    [Authorize]
     public class UserController : ApiController
     {
         IUserRepository _userRepository;

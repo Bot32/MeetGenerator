@@ -14,6 +14,7 @@ using System.Web.Http;
 
 namespace MeetGenerator.API.Controllers
 {
+    [Authorize]
     public class MeetingController : ApiController
     {
         IMeetingRepository _meetRepository;
@@ -48,7 +49,6 @@ namespace MeetGenerator.API.Controllers
         [HttpPost]
         public IHttpActionResult Create(Meeting meeting)
         {
-            RequestContext.Principal.Identity.
 
             Guid requestId = Guid.NewGuid();
 

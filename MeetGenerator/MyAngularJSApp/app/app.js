@@ -7,6 +7,16 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/home.html"
     });
 
+    $routeProvider.when("/login", {
+        controller: "loginController as loginCtrl",
+        templateUrl: "/app/views/login.html"
+    });
+
+    $routeProvider.when("/signup", {
+        controller: "signupController as signupCtrl",
+        templateUrl: "/app/views/signup.html"
+    });
+
     $routeProvider.when("/users", {
         controller: "userController as userCtrl",
         templateUrl: "/app/views/users.html"
@@ -27,16 +37,24 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/invitations.html"
     });
 
+    $routeProvider.when("/associate", {
+        controller: "associateController",
+        templateUrl: "/app/views/associate.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 
-var serviceBase = 'http://meetgen.azurewebsites.net/';
+var serviceBase = 'http://localhost:61689/';
+//var serviceBase = 'http://meetgen.azurewebsites.net/';
 app.constant('ngSettings', {
     apiServiceBaseUri: serviceBase,
 });
 
-app.run(function ($rootScope) {
-    $rootScope.$on('$routeChangeStart', function (event, current, previous, reject) {
-        $rootScope.updateMeetingInfo;
-    });
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
 });
+
+app.run(['authService', function (authService) {
+    authService.fillAuthData();
+}]);

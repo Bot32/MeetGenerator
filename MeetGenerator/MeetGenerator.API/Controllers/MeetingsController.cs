@@ -13,6 +13,7 @@ using System.Web.Http;
 
 namespace MeetGenerator.API.Controllers
 {
+    [Authorize]
     public class MeetingsController : ApiController
     {
         IMeetingRepository _meetRepository;

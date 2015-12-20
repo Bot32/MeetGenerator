@@ -66,20 +66,30 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\homeController.js" />
+    <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\invitationController.js" />
+    <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\meetingController.js" />
     <Content Include="app\controllers\placeController.js" />
+    <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\userController.js" />
     <Content Include="app\directives\placeForm.js" />
     <Content Include="app\directives\userForm.js" />
+    <Content Include="app\services\authInterceptorService.js" />
+    <Content Include="app\services\authService.js" />
     <Content Include="app\services\invitationService.js" />
     <Content Include="app\services\meetingService.js" />
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\userService.js" />
+    <Content Include="app\views\associate.html" />
     <Content Include="app\views\invitations.html" />
+    <Content Include="app\views\login.html" />
     <Content Include="app\views\placeForm.html" />
+    <Content Include="app\views\signup.html" />
     <Content Include="app\views\userForm.html" />
+    <Content Include="authComplete.html" />
     <Content Include="packages.config" />
     <Content Include="content\fonts\fontawesome-webfont.eot" />
     <Content Include="content\fonts\fontawesome-webfont.ttf" />

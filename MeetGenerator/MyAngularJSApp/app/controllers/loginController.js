@@ -1,10 +1,9 @@
 ﻿'use strict';
-app.controller('loginController', ['$scope', '$http', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings, $http) {
+app.controller('loginController', ['$scope', '$location', 'authService', 'ngSettings', function ($scope, $location, authService, ngSettings) {
 
     $scope.loginData = {
         userName: "",
         password: "",
-        useRefreshTokens: false
     };
 
     $scope.message = "";
@@ -13,7 +12,7 @@ app.controller('loginController', ['$scope', '$http', '$location', 'authService'
 
         authService.login($scope.loginData).then(function (response) {
 
-            $location.path('/orders');
+            $location.path('/home');
 
         },
          function (err) {
@@ -25,24 +24,19 @@ app.controller('loginController', ['$scope', '$http', '$location', 'authService'
 
         var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 
-        var externalProviderUrl = ngAuthSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
-                                                                    + "&response_type=token&client_id=" + ngAuthSettings.clientId
+        var externalProviderUrl = ngSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
+                                                                    + "&response_type=token&client_id=self"
                                                                     + "&redirect_uri=" + redirectUri;
-
-
         window.$windowScope = $scope;
 
         var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
     };
 
     $scope.authCompletedCB = function (fragment) {
-
+        console.log(fragment);
         $scope.$apply(function () {
 
             if (fragment.haslocalaccount == 'False') {
-
-                console.log(fragment);
-
                 authService.logOut();
 
                 authService.externalAuthData = {
@@ -52,6 +46,9 @@ app.controller('loginController', ['$scope', '$http', '$location', 'authService'
                     externalAccessToken: fragment.external_access_token
                 };
 
+                
+                console.log(authService.externalAuthData);
+
                 $location.path('/associate');
 
             }
@@ -60,7 +57,7 @@ app.controller('loginController', ['$scope', '$http', '$location', 'authService'
                 var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                 authService.obtainAccessToken(externalData).then(function (response) {
 
-                    $location.path('/orders');
+                    $location.path('/home');
 
                 },
              function (err) {
