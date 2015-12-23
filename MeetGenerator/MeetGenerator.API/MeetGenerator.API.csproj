@@ -174,8 +174,6 @@
     <Compile Include="Controllers\MeetingController.cs" />
     <Compile Include="DataValidators\MeetDataValidator.cs" />
     <Compile Include="DataValidators\UserDataValidator.cs" />
-    <Compile Include="Entities\Client.cs" />
-    <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Migration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MeetGenerator.Model\MeetGenerator.Model.csproj">

@@ -1,5 +1,4 @@
 ﻿using AngularJSAuthentication.API;
-using AngularJSAuthentication.API.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;

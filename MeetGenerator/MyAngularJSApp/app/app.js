@@ -45,8 +45,8 @@ app.config(function ($routeProvider) {
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 
-var serviceBase = 'http://localhost:61689/';
-//var serviceBase = 'http://meetgen.azurewebsites.net/';
+//var serviceBase = 'http://localhost:61689/';
+var serviceBase = 'http://meetgen.azurewebsites.net/';
 app.constant('ngSettings', {
     apiServiceBaseUri: serviceBase,
 });

@@ -34,15 +34,15 @@ app.controller('invitationController', ['$scope', 'invitationService',
             });
         }
 
-        this.postInvitationAndUpdate = function () {
-            this.postInvitation();
-            this.getMeeting();
-        }
+        //this.postInvitationAndUpdate = function () {
+        //    this.postInvitation();
+        //    this.getMeeting();
+        //}
 
-        this.deleteInvitationAndUpdate = function () {
-            this.deleteInvitation();
-            this.getMeeting();
-        }
+        //this.deleteInvitationAndUpdate = function () {
+        //    this.deleteInvitation();
+        //    this.getMeeting();
+        //}
 
         $scope.updateMeetingInfo = function (newMeeting) {
             invitationService.currentMeeting = newMeeting;
